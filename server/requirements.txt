@@ -1,0 +1,17 @@
+Django
+djangorestframework
+psycopg2-binary
+Pillow
+django-environ
+django-filter
+django-autoslug
+django-countries
+django-phonenumber-field
+phonenumbers
+isort
+flake8
+black
+djangorestframework-simplejwt
+PyJWT
+djoser
+google-cloud-storage
