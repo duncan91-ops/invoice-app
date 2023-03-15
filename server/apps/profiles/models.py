@@ -34,7 +34,7 @@ class Profile(TimeStampedUUIDModel):
     country = CountryField(verbose_name=_("Country"), default="KE")
     city = models.CharField(verbose_name=_("City"), max_length=180, default="Nairobi")
     street = models.CharField(verbose_name=_("Street"), max_length=255)
-    post_code = models.CharField(verbose_name=_("Post Code"), max_length=255)
+    post_code = models.CharField(verbose_name=_("Post Code"), max_length=150)
 
     def __str__(self):
         return f"{self.user.email}' profile"

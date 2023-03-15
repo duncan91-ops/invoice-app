@@ -61,7 +61,9 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
+    "apps.clients.apps.ClientsConfig",
     "apps.common.apps.CommonConfig",
+    "apps.invoices.apps.InvoicesConfig",
     "apps.profiles.apps.ProfilesConfig",
     "apps.users.apps.UsersConfig",
 ]
