@@ -25,7 +25,9 @@ class Invoice(TimeStampedUUIDModel):
     user = models.ForeignKey(
         CustomUser, on_delete=models.CASCADE, related_name="invoices"
     )
-    invoice_no = models.CharField(verbose_name=_("Invoice Number"), max_length=6)
+    invoice_no = models.CharField(
+        verbose_name=_("Invoice Number"), max_length=6, blank=True, null=True
+    )
     description = models.CharField(
         verbose_name=_("Description"), max_length=255, blank=True
     )
@@ -34,7 +36,9 @@ class Invoice(TimeStampedUUIDModel):
         choices=PaymentTerms.choices,
         default=PaymentTerms.ONE,
     )
-    payment_due = models.DateTimeField(verbose_name=_("Payment Due Date"), blank=True)
+    payment_due = models.DateTimeField(
+        verbose_name=_("Payment Due Date"), blank=True, null=True
+    )
     client_name = models.CharField(
         verbose_name=_("Client Name"), max_length=150, blank=True
     )
@@ -46,7 +50,11 @@ class Invoice(TimeStampedUUIDModel):
         default=Status.DRAFT,
     )
     total = models.DecimalField(
-        verbose_name=_("Total Cost"), max_digits=10, decimal_places=2
+        verbose_name=_("Total Cost"),
+        max_digits=10,
+        decimal_places=2,
+        blank=True,
+        default=0.00,
     )
 
     saves_count = 0
@@ -86,14 +94,22 @@ class Item(TimeStampedUUIDModel):
     name = models.CharField(verbose_name=_("Item Name"), max_length=255, blank=True)
     quantity = models.IntegerField(verbose_name=_("Quantity"), default=0, blank=True)
     price = models.DecimalField(
-        verbose_name=_("Item Price"), max_digits=8, decimal_places=2, blank=True
+        verbose_name=_("Item Price"),
+        max_digits=8,
+        decimal_places=2,
+        blank=True,
+        default=0.00,
+    )
+    total = models.DecimalField(
+        verbose_name=_("Total Cost"),
+        max_digits=10,
+        decimal_places=2,
+        blank=True,
+        default=0.00,
     )
 
     class Meta:
         unique_together = ["invoice", "name"]
-
-    def get_total(self):
-        return round(self.price * self.quantity, 2)
 
     def __str__(self):
         return f"Item -> {self.name}"

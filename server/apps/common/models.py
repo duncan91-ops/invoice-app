@@ -27,8 +27,10 @@ class Address(models.Model):
         blank=False,
         null=False,
     )
-    street = models.CharField(verbose_name=_("Street"), max_length=255)
-    post_code = models.CharField(verbose_name=_("Post Code"), max_length=150)
+    street = models.CharField(verbose_name=_("Street"), max_length=255, blank=True)
+    post_code = models.CharField(
+        verbose_name=_("Post Code"), max_length=150, blank=True
+    )
 
     class Meta:
         abstract = True
