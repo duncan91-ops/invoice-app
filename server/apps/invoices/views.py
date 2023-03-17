@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .exceptions import InvoiceNotFound, NotYourInvoice
-from .models import Invoice
+from .models import Invoice, Item
 from .serializers import InvoiceSerializer
 
 
@@ -49,3 +49,49 @@ class InvoiceUpdateAPIView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response({"error": "Invalid Data"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["DELETE"])
+@permission_classes([permissions.IsAuthenticated])
+def delete_invoice_api_view(request, invoice_id):
+    try:
+        invoice = Invoice.objects.get(id=invoice_id)
+    except Invoice.DoesNotExist:
+        return Response(
+            {"error": "invoice does not exist"}, status=status.HTTP_404_NOT_FOUND
+        )
+
+    user_email = invoice.user.email
+    if user_email != request.user.email:
+        return Response(
+            {"error": "Cannot delete invoice that does not belong to you"},
+            status=status.HTTP_403_FORBIDDEN,
+        )
+
+    delete_operation = invoice.delete()
+    if delete_operation:
+        return Response({"success": "Deletion Successful"})
+    return Response({"failure": "Deletion failed"})
+
+
+@api_view(["DELETE"])
+@permission_classes([permissions.IsAuthenticated])
+def delete_item_api_view(request, item_id):
+    try:
+        item = Item.objects.get(id=item_id)
+    except Item.DoesNotExist:
+        return Response(
+            {"error": "item does not exist"}, status=status.HTTP_404_NOT_FOUND
+        )
+
+    user_email = item.invoice.user.email
+    if user_email != request.user.email:
+        return Response(
+            {"error": "Cannot delete invoice that does not belong to you"},
+            status=status.HTTP_403_FORBIDDEN,
+        )
+
+    delete_operation = item.delete()
+    if delete_operation:
+        return Response({"success": "Deletion Successful"})
+    return Response({"failure": "Deletion failed"})

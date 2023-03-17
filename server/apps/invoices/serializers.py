@@ -1,7 +1,11 @@
+import logging
+
 from django_countries.serializer_fields import CountryField
 from rest_framework import serializers
 
 from .models import Invoice, Item, ClientAddress, SenderAddress
+
+logger = logging.getLogger(__name__)
 
 
 class ClientAddressSerializer(serializers.ModelSerializer):
@@ -57,6 +61,7 @@ class InvoiceSerializer(serializers.ModelSerializer):
         except KeyError:
             items_data = []
         invoice = Invoice.objects.create(user=user, **validated_data)
+        logger.info(f"client address data -> {client_address_data}")
         ClientAddress.objects.create(invoice=invoice, **client_address_data)
         SenderAddress.objects.create(invoice=invoice, **sender_address_data)
         for item_data in items_data:

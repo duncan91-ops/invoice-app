@@ -57,14 +57,14 @@ class Invoice(TimeStampedUUIDModel):
         default=0.00,
     )
 
-    saves_count = 0
-
     class Meta:
         unique_together = ["user", "invoice_no"]
 
+    def __str__(self):
+        return f"Invoice #{self.invoice_no}"
+
     def save(self, *args, **kwargs):
-        self.saves_count += 1
-        if self.saves_count == 1:
+        if not self.invoice_no:
             letters = "".join(random.choices(string.ascii_uppercase, k=2))
             nums = "".join(random.choices(string.digits, k=4))
             self.invoice_no = letters + nums

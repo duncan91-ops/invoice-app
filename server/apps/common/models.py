@@ -18,14 +18,15 @@ class TimeStampedUUIDModel(models.Model):
 
 class Address(models.Model):
     country = CountryField(
-        verbose_name=_("Country"), default="KE", blank=False, null=False
+        verbose_name=_("Country"),
+        default="KE",
+        blank=True,
     )
     city = models.CharField(
         verbose_name=_("City"),
         max_length=180,
         default="Nairobi",
-        blank=False,
-        null=False,
+        blank=True,
     )
     street = models.CharField(verbose_name=_("Street"), max_length=255, blank=True)
     post_code = models.CharField(
