@@ -1,6 +1,7 @@
 from io import BytesIO
 import logging
 import sys
+import os
 
 from django.conf import settings
 from django.core.files.uploadedfile import InMemoryUploadedFile
@@ -8,9 +9,11 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from google.cloud import storage
 from PIL import Image
 
-
 logger = logging.getLogger(__name__)
-client = storage.Client()
+logger.info(f"Current working directory -> {os.getcwd()}")
+client = storage.Client.from_service_account_json(
+    json_credentials_path="./credentials.json"
+)
 bucket = client.get_bucket(settings.STORAGE_BUCKET)
 
 

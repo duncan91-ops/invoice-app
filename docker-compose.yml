@@ -1,0 +1,90 @@
+services:
+  api:
+    build:
+      context: ./server
+      dockerfile: ../docker/local/django/Dockerfile
+    command: /start
+    volumes:
+      - ./server:/app
+      - static_volume:/app/staticfiles
+    # ports:
+    #   - "8000:8000"
+    env_file:
+      - ./server/.env
+    depends_on:
+      - invoices-db
+      - redis
+    networks:
+      - invoices-net
+
+  invoices-db:
+    image: postgres:14-alpine
+    ports:
+      - "5438:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    networks:
+      - invoices-net
+  
+  redis:
+    image: redis:5-alpine 
+    networks:
+      - invoices-net
+  
+  celery_worker:
+    build:
+      context: ./server
+      dockerfile: ../docker/local/django/Dockerfile
+    command: /start-celeryworker 
+    volumes:
+      - ./server:/app
+    env_file:
+      - ./server/.env
+    depends_on:
+      - redis
+      - invoices-db
+    networks:
+      - invoices-net
+  
+  flower:
+    build:
+      context: ./server 
+      dockerfile: ../docker/local/django/Dockerfile 
+    command: /start-flower
+    volumes:
+      - ./server:/app
+    env_file:
+      - ./server/.env
+    ports:
+      - "5557:5555"
+    depends_on:
+      - redis
+      - invoices-db
+    networks:
+      - invoices-net
+
+  nginx:
+    restart: always
+    build:
+      context: ./docker/local/nginx
+      dockerfile: Dockerfile
+    depends_on:
+      - api
+    volumes:
+      - static_volume:/app/staticfiles
+    ports:
+      - "8081:80"
+    networks:
+      - invoices-net
+
+networks:
+  invoices-net:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  static_volume:
