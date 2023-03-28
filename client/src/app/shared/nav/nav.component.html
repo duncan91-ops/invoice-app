@@ -1,0 +1,76 @@
+<nav class="nav">
+  <div class="logo-box">
+    <a routerLink="/" class="logo-link">
+      <img src="/assets/icons/logo.svg" alt="logo" class="logo" />
+    </a>
+  </div>
+  <section class="section__links">
+    <div class="nav--main">
+      <ul class="nav__list">
+        <li class="nav__item">
+          <a routerLink="" class="nav__link">
+            <img
+              src="/assets/icons/icon-home.svg"
+              alt="home icon"
+              class="nav__link-icon"
+            />
+            <span class="tooltip">home</span>
+          </a>
+        </li>
+        <li class="nav__item">
+          <a routerLink="" class="nav__link">
+            <img
+              src="/assets/icons/icon-invoices.svg"
+              alt="invoices icon"
+              class="nav__link-icon"
+            />
+            <span class="tooltip">invoices</span>
+          </a>
+        </li>
+        <li class="nav__item">
+          <a routerLink="" class="nav__link">
+            <img
+              src="/assets/icons/icon-clients.svg"
+              alt="clients icon"
+              class="nav__link-icon"
+            />
+            <span class="tooltip">clients</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav--sub">
+      <ul class="nav__list">
+        <li class="nav__item">
+          <a routerLink="" class="nav__link">
+            <img
+              src="/assets/icons/icon-login.svg"
+              alt="login icon"
+              class="nav__link-icon"
+            />
+            <span class="tooltip">login</span>
+          </a>
+        </li>
+        <li class="nav__item">
+          <button (click)="changeTheme()" class="btn btn__theme">
+            <img
+              *ngIf="themeName === 'light'"
+              src="/assets/icons/icon-moon.svg"
+              alt="moon icon"
+              class="btn__theme-icon"
+            />
+            <img
+              *ngIf="themeName === 'dark'"
+              src="/assets/icons/icon-sun.svg"
+              alt="sun icon"
+              class="btn__theme-icon"
+            />
+            <span class="tooltip">theme</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <div class="profile-box"></div>
+</nav>
