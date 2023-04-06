@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { ThemeModule } from './theme/theme.module';
@@ -20,6 +21,7 @@ import {lightTheme} from './theme/light-theme';
     ProfileModule,
     ThemeModule.forRoot({themes: [darkTheme, lightTheme], active: 'light'}),
     SharedModule,
+    RouterModule,
     AppRoutingModule,
   ],
   providers: [],

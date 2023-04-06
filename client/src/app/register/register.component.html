@@ -1,1 +1,45 @@
-<p>register works!</p>
+<form class="form-container">
+  <h2 class="title">sign up</h2>
+  <form class="form" [formGroup]="registerForm">
+    <div class="formInputContainer">
+      <label for="firstName" class="label firstName">first name</label>
+      <input
+        type="text"
+        formControlName="firstName"
+        class="formInput firstName"
+        id="firstName"
+      />
+    </div>
+    <div class="formInputContainer">
+      <label for="lastName" class="label lastName">last name</label>
+      <input
+        type="text"
+        formControlName="lastName"
+        class="formInput lastName"
+        id="lastName"
+      />
+    </div>
+    <div class="formInputContainer">
+      <label for="email" class="label email">email</label>
+      <input
+        type="email"
+        formControlName="email"
+        class="formInput email"
+        id="email"
+      />
+    </div>
+    <div class="formInputContainer">
+      <label for="password" class="label password">password</label>
+      <input
+        type="password"
+        formControlName="password"
+        class="formInput password"
+        id="password"
+      />
+    </div>
+    <button class="btn btn__submit">sign up</button>
+    <p class="small">
+      Already have an account? <a routerLink="/login" class="login">sign in</a>
+    </p>
+  </form>
+</form>
