@@ -7,6 +7,6 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "invoices_project.settings.devel
 
 app = Celery("invoices")
 
-app.config_from_object("invoices_project.settings.development", "CELERY")
+app.config_from_object("invoices_project.settings.development", namespace="CELERY")
 
 app.autodiscover_tasks(lambda: base.INSTALLED_APPS)
