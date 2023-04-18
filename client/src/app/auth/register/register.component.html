@@ -1,6 +1,6 @@
-<form class="form-container">
+<div class="form-container">
   <h2 class="title">sign up</h2>
-  <form class="form" [formGroup]="registerForm">
+  <form class="form" [formGroup]="registerForm" (ngSubmit)="register()">
     <div class="formInputContainer">
       <label for="firstName" class="label firstName">first name</label>
       <input
@@ -37,9 +37,19 @@
         id="password"
       />
     </div>
+    <div class="formInputContainer">
+      <label for="re_password" class="label password">retype password</label>
+      <input
+        type="password"
+        formControlName="re_password"
+        class="formInput re_password"
+        id="re_password"
+      />
+    </div>
     <button class="btn btn__submit">sign up</button>
     <p class="small">
-      Already have an account? <a routerLink="/login" class="login">sign in</a>
+      Already have an account?
+      <a routerLink="/auth/login" class="login">sign in</a>
     </p>
   </form>
-</form>
+</div>

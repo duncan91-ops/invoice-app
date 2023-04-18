@@ -4,13 +4,15 @@ from djoser.serializers import UserCreateSerializer
 from phonenumber_field.serializerfields import PhoneNumberField
 from rest_framework import serializers
 
+from apps.profiles.serializers import ProfilePhotoSerializer
+
 CustomUser = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer):
     gender = serializers.CharField(source="profile.gender")
     phone_number = PhoneNumberField(source="profile.phone_number")
-    profile_photo = serializers.ImageField(source="profile.profile_photo")
+    profile_photo = ProfilePhotoSerializer(source="profile.profile_photo")
     country = CountryField(source="profile.country")
     city = serializers.CharField(source="profile.city")
     street = serializers.CharField(source="profile.street")
@@ -41,7 +43,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def get_last_name(self, obj):
         return obj.last_name.title()
-    
+
     def get_full_name(self, obj):
         return obj.get_full_name
 

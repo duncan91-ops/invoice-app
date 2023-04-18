@@ -1,6 +1,6 @@
-<form class="form-container">
+<div class="form-container">
   <h2 class="title">sign in</h2>
-  <form class="form" [formGroup]="loginForm">
+  <form class="form" [formGroup]="loginForm" (ngSubmit)="login()">
     <div class="formInputContainer">
       <label for="email" class="label email">email</label>
       <input
@@ -19,10 +19,10 @@
         id="password"
       />
     </div>
-    <button class="btn btn__submit">sign in</button>
+    <button class="btn btn__submit" type="submit">sign in</button>
     <p class="small">
       Don't have an account yet?
-      <a routerLink="/register" class="register">sign up</a>
+      <a routerLink="/auth/register" class="register">sign up</a>
     </p>
   </form>
-</form>
+</div>

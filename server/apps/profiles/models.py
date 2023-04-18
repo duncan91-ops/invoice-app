@@ -44,11 +44,21 @@ class ProfilePhoto(models.Model):
     profile = models.OneToOneField(
         Profile, on_delete=models.CASCADE, related_name="profile_photo"
     )
-    small = models.URLField(verbose_name=_("Small sized Profile Photo"), max_length=500)
-    medium = models.URLField(
-        verbose_name=_("medium sized Profile Photo"), max_length=500
+    small = models.URLField(
+        verbose_name=_("Small sized Profile Photo"),
+        max_length=500,
+        default="https://storage.googleapis.com/invoices-profiles-5cadc-077ea3/small/profile_default.png",
     )
-    large = models.URLField(verbose_name=_("large sized Profile Photo"), max_length=500)
+    medium = models.URLField(
+        verbose_name=_("medium sized Profile Photo"),
+        max_length=500,
+        default="https://storage.googleapis.com/invoices-profiles-5cadc-077ea3/medium/profile_default.png",
+    )
+    large = models.URLField(
+        verbose_name=_("large sized Profile Photo"),
+        max_length=500,
+        default="https://storage.googleapis.com/invoices-profiles-5cadc-077ea3/large/profile_default.png",
+    )
 
     def __str__(self):
         return f"{self.profile.user.email}'s profile photo"

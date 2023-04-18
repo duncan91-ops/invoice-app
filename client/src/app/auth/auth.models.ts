@@ -3,6 +3,12 @@ export interface IToken {
   refresh: string;
 }
 
+export interface IRegisterData {
+  first_name: string;
+  last_name: string;
+  email: string;
+}
+
 export interface IRegister {
   first_name: string;
   last_name: string;
@@ -29,7 +35,11 @@ export interface IUser {
   full_name: string;
   gender: string;
   phone_number: string;
-  profile_photo: string | null;
+  profile_photo: {
+    small: string;
+    medium: string;
+    large: string;
+  };
   country: string;
   city: string;
   street: string;

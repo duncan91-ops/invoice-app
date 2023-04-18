@@ -99,4 +99,19 @@
 .profile-box {
   height: 8.8rem;
   border-top: 1px solid var(--divider);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-link {
+  display: inline-block;
+  width: 4rem;
+  height: 4rem;
+}
+
+.profile-avatar {
+  width: 100%;
+  height: auto;
+  border-radius: 100px;
 }
