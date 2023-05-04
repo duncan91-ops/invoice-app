@@ -12,10 +12,10 @@ urlpatterns = [
     path("", InvoiceListAPIView.as_view(), name="invoice_list"),
     path("create/", InvoiceCreateAPIView.as_view(), name="invoice_create"),
     path(
-        "update/<str:invoice_id>/",
+        "<str:invoice_id>/update/",
         InvoiceUpdateAPIView.as_view(),
         name="invoice_update",
     ),
-    path("delete/<str:invoice_id>/", delete_invoice_api_view, name="invoice_delete"),
+    path("<str:invoice_id>/delete/", delete_invoice_api_view, name="invoice_delete"),
     path("items/delete/<str:item_id>/", delete_item_api_view, name="item_delete"),
 ]

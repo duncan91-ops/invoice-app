@@ -1,1 +1,75 @@
-<p>invoice-list works!</p>
+<section class="invoices">
+  <header class="header">
+    <div class="header--left">
+      <h1 class="title">Invoices</h1>
+      <p class="count">There are 7 total invoices</p>
+    </div>
+    <div class="header--right">
+      <div class="filter">
+        <button class="btn btn__filter">
+          <span class="btn__filter-text">Filter by status</span>
+          <svg width="11" height="7" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M1 1l4.228 4.228L9.456 1"
+              stroke="#7C5DFA"
+              stroke-width="2"
+              fill="none"
+              fill-rule="evenodd"
+            />
+          </svg>
+        </button>
+      </div>
+      <button class="btn btn__add">
+        <span class="btn__add-icon">
+          <svg width="11" height="11" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M6.313 10.023v-3.71h3.71v-2.58h-3.71V.023h-2.58v3.71H.023v2.58h3.71v3.71z"
+              fill="#7C5DFA"
+              fill-rule="nonzero"
+            />
+          </svg>
+        </span>
+        <span class="btn__add-text">New Invoice</span>
+      </button>
+    </div>
+  </header>
+  <ng-container *ngIf="invoices$ | async as invoices">
+    <ul class="items" *ngIf="invoices.length > 0">
+      <li class="item" *ngFor="let invoice of invoices">
+        <a [routerLink]="['/invoices', invoice.id]" class="item__link">
+          <span class="number">{{ invoice.invoice_no }}</span>
+          <span class="due">{{ invoice.payment_due }}</span>
+          <span class="name">{{ invoice.client_name }}</span>
+          <span class="total">£ {{ invoice.total }}</span>
+          <span class="status">
+            <span class="status__dot"></span>
+            <span class="status__text">{{ invoice.status }}</span>
+          </span>
+          <svg width="7" height="10" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M1 1l4 4-4 4"
+              stroke="#7C5DFA"
+              stroke-width="2"
+              fill="none"
+              fill-rule="evenodd"
+            />
+          </svg>
+        </a>
+      </li>
+    </ul>
+    <div class="empty" *ngIf="invoices.length == 0">
+      <div class="illustration-box">
+        <img
+          src="../../../assets/icons/illustration-empty.svg"
+          alt="illustration"
+          class="illustration"
+        />
+      </div>
+      <h2 class="empty__title">There is nothing here</h2>
+      <p class="empty__msg">
+        Create an invoice by clicking the
+        <span class="special">New Invoice</span> button and get started
+      </p>
+    </div>
+  </ng-container>
+</section>

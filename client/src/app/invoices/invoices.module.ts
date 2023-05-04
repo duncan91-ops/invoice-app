@@ -1,14 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import {InvoicesComponent} from './invoices.component';
+import { InvoicesRoutingModule } from './invoices-routing.module';
 import { InvoiceListComponent } from './invoice-list/invoice-list.component';
-import { InvoiceDetailComponent } from './invoice-detail/invoice-detail.component'
+import { InvoiceDetailComponent } from './invoice-detail/invoice-detail.component';
+import { InvoicesComponent } from './invoices/invoices.component';
+import { InvoiceAddComponent } from './invoice-add/invoice-add.component';
+import { InvoiceEditComponent } from './invoice-edit/invoice-edit.component'
 
 @NgModule({
-  declarations: [InvoicesComponent, InvoiceListComponent, InvoiceDetailComponent],
+  declarations: [InvoiceListComponent, InvoiceDetailComponent, InvoicesComponent, InvoiceAddComponent, InvoiceEditComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    InvoicesRoutingModule
   ]
 })
 export class InvoicesModule { }
