@@ -11,5 +11,6 @@ export const lightTheme: Theme = {
     '--input-border': '#dfe3fa',
     '--input-focus-border': '#9277ff',
     '--input-bg': '#ffffff',
+    '--btn-bg-primary': '#f9fafe',
   }
 }

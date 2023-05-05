@@ -11,5 +11,6 @@ export const darkTheme: Theme = {
     '--input-border': '#252945',
     '--input-focus-border': '#7c5dfa',
     '--input-bg': '#1e2139',
+    '--btn-bg-primary': "#252945",
   }
 }

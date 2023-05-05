@@ -11,7 +11,7 @@ export interface IInvoice {
   invoice_no?: string;
   description: string;
   payment_terms: number;
-  payment_due: string;
+  payment_due?: string;
   sender_address: {
     country: string;
     city: string;

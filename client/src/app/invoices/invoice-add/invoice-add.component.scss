@@ -1,14 +1,65 @@
-.add-invoice {
+.form {
   width: 71.9rem;
   height: 100%;
   overflow-y: auto;
   padding-left: 10.3rem;
   background-color: var(--bg-tertiary);
   border-radius: 0 2rem 2rem 0;
+  position: relative;
+
+  &__btns {
+    position: fixed;
+    left: 0;
+    top: calc(100% - 11rem);
+    height: 11rem;
+    width: 71.9rem;
+    border-radius: 20px 20px 0 0;
+    background-color: var(--bg-tertiary);
+    padding-left: 10.3rem;
+  }
+
+  &__btns-container {
+    padding: 3.1rem 5.6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .right {
+      display: flex;
+      gap: 0.8rem;
+      align-items: center;
+    }
+
+    .btn {
+      padding: 1.7rem 2.4rem;
+      font-family: "Spartan Bold", sans-serif;
+      font-size: 1.2rem;
+      line-height: 1.5rem;
+      border-radius: 24px;
+
+      &__discard {
+        background-color: #f9fafe;
+        color: #7e88c3;
+      }
+
+      &__draft {
+        background-color: #373b53;
+        color: #888eb0;
+      }
+
+      &__save {
+        background-color: var(--cta-primary);
+        color: #fff;
+      }
+    }
+  }
 }
 
-.form-container {
-  padding: 5.6rem 5.6rem 3.2rem;
+.container {
+  padding: 5.6rem 5.6rem 11.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4.8rem;
 }
 
 .title {
@@ -17,4 +68,157 @@
   line-height: 3.2rem;
   color: var(--text-primary);
   text-transform: capitalize;
+}
+
+.fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+}
+
+.legend {
+  text-transform: capitalize;
+  color: var(--cta-primary);
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+  font-family: "Spartan Bold", sans-serif;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.others {
+  display: flex;
+  justify-content: space-between;
+
+  .input {
+    max-width: 15.2rem;
+  }
+}
+
+.label {
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+  text-transform: capitalize;
+}
+
+.input {
+  font-family: "Spartan Bold", sans-serif;
+  font-size: 1.5rem;
+  line-height: 1.7rem;
+  padding: 1.5rem 2rem;
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: var(--text-primary);
+
+  &:focus {
+    outline: none;
+    border: 1px solid var(--input-focus-border);
+  }
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+
+  &__title {
+    font-family: "Spartan Bold", sans-serif;
+    font-size: 1.8rem;
+    line-height: 3.2rem;
+    color: #777f98;
+    text-transform: capitalize;
+  }
+
+  &__labels {
+    display: flex;
+    gap: 1.6rem;
+
+    .name {
+      width: 21.4rem;
+    }
+
+    .quantity {
+      width: 4.6rem;
+    }
+
+    .price {
+      width: 10rem;
+    }
+
+    .total {
+      flex-grow: 1;
+    }
+  }
+
+  &__label {
+    text-transform: capitalize;
+    font-size: 1.2rem;
+    line-height: 1.5rem;
+    color: var(--text-secondary);
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+
+    .name {
+      width: 21.4rem;
+    }
+
+    .quantity {
+      width: 4.6rem;
+      padding: 1.7rem 0.5rem;
+      font-size: 1.2rem;
+      line-height: 1.5rem;
+    }
+
+    .price {
+      width: 10rem;
+      padding: 1.7rem 1rem;
+      font-size: 1.2rem;
+      line-height: 1.5rem;
+    }
+
+    .total {
+      padding: 1.7rem 0;
+      max-width: 6rem;
+      flex-grow: 1;
+      font-size: 1.2rem;
+      line-height: 1.5rem;
+      font-family: "Spartan Bold", sans-serif;
+      color: var(--text-secondary);
+      border: none;
+
+      &:focus {
+        border: none;
+      }
+    }
+  }
+}
+
+.btn {
+  &__add-item {
+    padding: 1.7rem 0;
+    text-align: center;
+    border-radius: 24px;
+    background-color: var(--btn-bg-primary);
+    font-family: "Spartan Bold", sans-serif;
+    font-size: 1.2rem;
+    line-height: 1.5rem;
+    text-transform: capitalize;
+    color: var(--text-secondary);
+    margin-top: 0.2rem;
+  }
 }
