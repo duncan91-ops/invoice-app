@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 
 from .exceptions import InvoiceNotFound, NotYourInvoice
 from .models import Invoice, Item
-from .serializers import InvoiceSerializer
+from .serializers import InvoiceSerializer, InvoiceCreateSerializer
 
 
 class InvoiceListAPIView(generics.ListAPIView):
@@ -23,7 +23,7 @@ class InvoiceCreateAPIView(APIView):
 
     def post(self, request):
         data = request.data
-        serializer = InvoiceSerializer(data=data, context={"request": request})
+        serializer = InvoiceCreateSerializer(data=data, context={"request": request})
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
