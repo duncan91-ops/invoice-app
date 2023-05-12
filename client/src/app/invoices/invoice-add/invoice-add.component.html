@@ -1,9 +1,16 @@
-<form class="form" [formGroup]="addForm">
+<form class="form" [formGroup]="addForm" (click)="$event.stopPropagation()">
   <div class="container">
     <h2 class="title">new invoice</h2>
     <div class="fieldset sender" formGroupName="sender_address">
       <h3 class="legend sender__title">bill from</h3>
-      <div class="input-container">
+      <div
+        class="input-container"
+        [ngClass]="{
+          error: addForm.get('sender_address')?.get('street')?.errors
+            ? true
+            : false
+        }"
+      >
         <label for="sender__street" class="label">street address</label>
         <input
           type="text"
@@ -13,7 +20,14 @@
         />
       </div>
       <div class="others">
-        <div class="input-container">
+        <div
+          class="input-container"
+          [ngClass]="{
+            error: addForm.get('sender_address')?.get('city')?.errors
+              ? true
+              : false
+          }"
+        >
           <label for="sender__city" class="label">city</label>
           <input
             type="text"
@@ -22,7 +36,14 @@
             formControlName="city"
           />
         </div>
-        <div class="input-container">
+        <div
+          class="input-container"
+          [ngClass]="{
+            error: addForm.get('sender_address')?.get('post_code')?.errors
+              ? true
+              : false
+          }"
+        >
           <label for="sender__code" class="label">post code</label>
           <input
             type="text"
@@ -31,7 +52,14 @@
             formControlName="post_code"
           />
         </div>
-        <div class="input-container">
+        <div
+          class="input-container"
+          [ngClass]="{
+            error: addForm.get('sender_address')?.get('country')?.errors
+              ? true
+              : false
+          }"
+        >
           <label for="sender__country" class="label">country</label>
           <input
             type="text"
@@ -44,7 +72,12 @@
     </div>
     <div class="fieldset client">
       <h3 class="legend client__title">bill from</h3>
-      <div class="input-container">
+      <div
+        class="input-container"
+        [ngClass]="{
+          error: addForm.get('client_name')?.errors ? true : false
+        }"
+      >
         <label for="client__name" class="label">client's name</label>
         <input
           type="text"
@@ -53,7 +86,12 @@
           formControlName="client_name"
         />
       </div>
-      <div class="input-container">
+      <div
+        class="input-container"
+        [ngClass]="{
+          error: addForm.get('client_email')?.errors ? true : false
+        }"
+      >
         <label for="client__email" class="label">client's email</label>
         <input
           type="email"
@@ -63,7 +101,14 @@
         />
       </div>
       <ng-container formGroupName="client_address">
-        <div class="input-container">
+        <div
+          class="input-container"
+          [ngClass]="{
+            error: addForm.get('client_address')?.get('street')?.errors
+              ? true
+              : false
+          }"
+        >
           <label for="client__street" class="label">street address</label>
           <input
             type="text"
@@ -73,7 +118,14 @@
           />
         </div>
         <div class="others">
-          <div class="input-container">
+          <div
+            class="input-container"
+            [ngClass]="{
+              error: addForm.get('client_address')?.get('city')?.errors
+                ? true
+                : false
+            }"
+          >
             <label for="client__city" class="label">city</label>
             <input
               type="text"
@@ -82,7 +134,14 @@
               formControlName="city"
             />
           </div>
-          <div class="input-container">
+          <div
+            class="input-container"
+            [ngClass]="{
+              error: addForm.get('client_address')?.get('post_code')?.errors
+                ? true
+                : false
+            }"
+          >
             <label for="client__code" class="label">post code</label>
             <input
               type="text"
@@ -91,7 +150,14 @@
               formControlName="post_code"
             />
           </div>
-          <div class="input-container">
+          <div
+            class="input-container"
+            [ngClass]="{
+              error: addForm.get('client_address')?.get('country')?.errors
+                ? true
+                : false
+            }"
+          >
             <label for="client__country" class="label">country</label>
             <input
               type="text"
@@ -104,9 +170,54 @@
       </ng-container>
     </div>
     <div class="fieldset">
+      <div
+        class="input-container"
+        [ngClass]="{
+          error: addForm.get('payment_terms')?.errors ? true : false
+        }"
+      >
+        <p class="label">payment terms</p>
+        <button
+          class="btn btn__terms"
+          (click)="showPaymentTerms = !showPaymentTerms"
+        >
+          <span class="btn__terms-text"
+            >net {{ getPaymentTerms() || terms[0] }} day{{
+              getPaymentTerms() > 1 ? "s" : ""
+            }}</span
+          >
+          <svg
+            class="btn__terms-icon"
+            [ngClass]="{ open: showPaymentTerms }"
+            width="11"
+            height="7"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M1 1l4.228 4.228L9.456 1"
+              stroke="#7C5DFA"
+              stroke-width="2"
+              fill="none"
+              fill-rule="evenodd"
+            />
+          </svg>
+        </button>
+        <ul class="terms" *ngIf="showPaymentTerms && terms.length > 0">
+          <li class="terms__item" *ngFor="let term of terms">
+            <button class="btn btn__term" (click)="setPaymentTerms(term)">
+              net {{ term }} day{{ term > 1 ? "s" : "" }}
+            </button>
+          </li>
+        </ul>
+      </div>
       <div class="input-container">
         <label for="description" class="label">description</label>
-        <input type="text" id="description" class="input description" />
+        <input
+          type="text"
+          id="description"
+          class="input description"
+          formControlName="description"
+        />
       </div>
     </div>
     <div class="items">
@@ -123,17 +234,30 @@
         *ngFor="let item of items.controls; let i = index"
       >
         <div class="items__item" [formGroupName]="i">
-          <input type="text" formControlName="name" class="input name" />
+          <input
+            type="text"
+            formControlName="name"
+            class="input name"
+            [ngClass]="{
+              error: item.get('name')?.errors ? true : false
+            }"
+          />
           <input
             type="number"
             #quantity
             formControlName="quantity"
+            [ngClass]="{
+              error: item.get('quantity')?.errors ? true : false
+            }"
             class="input quantity"
           />
           <input
             type="number"
             formControlName="price"
             #price
+            [ngClass]="{
+              error: item.get('price')?.errors ? true : false
+            }"
             class="input price"
           />
           <input
@@ -175,7 +299,9 @@
         <button class="btn btn__draft" type="button" (click)="saveAsDraft()">
           Save as Draft
         </button>
-        <button class="btn btn__save">Save & Send</button>
+        <button class="btn btn__save" type="button" (click)="saveAndSend()">
+          Save & Send
+        </button>
       </div>
     </div>
   </div>

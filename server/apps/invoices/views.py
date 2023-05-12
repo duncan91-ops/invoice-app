@@ -1,3 +1,7 @@
+from datetime import timedelta
+
+from django.utils import timezone
+
 from rest_framework import generics, permissions, status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
@@ -5,7 +9,7 @@ from rest_framework.views import APIView
 
 from .exceptions import InvoiceNotFound, NotYourInvoice
 from .models import Invoice, Item
-from .serializers import InvoiceSerializer, InvoiceCreateSerializer
+from .serializers import InvoiceSerializer
 
 
 class InvoiceListAPIView(generics.ListAPIView):
@@ -23,11 +27,25 @@ class InvoiceCreateAPIView(APIView):
 
     def post(self, request):
         data = request.data
-        serializer = InvoiceCreateSerializer(data=data, context={"request": request})
+        payment_due = timezone.now() + timedelta(days=data.get('payment_terms'))
+        data['payment_due'] = payment_due
+        serializer = InvoiceSerializer(data=data, context={"request": request})
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response({"error": "Invalid data"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class InvoiceDetailAPIView(generics.RetrieveAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = InvoiceSerializer
+    lookup_field = "id"
+    lookup_url_kwarg = "invoice_id"
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = Invoice.objects.filter(user=user)
+        return queryset
 
 
 class InvoiceUpdateAPIView(APIView):

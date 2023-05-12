@@ -8,4 +8,7 @@
   <a routerLink="/auth/register" class="btn btn__join" *ngIf="!(user$ | async)"
     >join today</a
   >
+  <a routerLink="/invoices" class="btn btn__invoices" *ngIf="user$ | async"
+    >invoices</a
+  >
 </section>

@@ -33,59 +33,18 @@ class ItemSerializer(serializers.ModelSerializer):
         fields = ["id", "name", "quantity", "price", "total"]
 
 
-class InvoiceCreateSerializer(serializers.ModelSerializer):
-    sender_address = SenderAddressSerializer()
-    client_address = ClientAddressSerializer()
-    items = ItemSerializer(many=True)
-
-    class Meta:
-        model = Invoice
-        fields = [
-            "description",
-            "payment_terms",
-            "sender_address",
-            "client_name",
-            "client_email",
-            "client_address",
-            "status",
-            "items",
-            "total",
-        ]
-
-    def create(self, validated_data):
-        user = self.context["request"].user
-        client_address_data = validated_data.pop("client_address")
-        sender_address_data = validated_data.pop("sender_address")
-        items_data = validated_data.pop("items")
-        # try:
-        #     items_data = validated_data.pop("items")
-        # except KeyError:
-        #     items_data = []
-        status = validated_data.get("status")
-        if status == "pending":
-            payment_due = datetime.now() + timedelta(
-                days=validated_data.get("payment_terms")
-            )
-        invoice = Invoice.objects.create(
-            user=user, **validated_data, payment_due=payment_due
-        )
-        ClientAddress.objects.create(invoice=invoice, **client_address_data)
-        SenderAddress.objects.create(invoice=invoice, **sender_address_data)
-        for item_data in items_data:
-            Item.objects.create(invoice=invoice, **item_data)
-        return invoice
-
-
 class InvoiceSerializer(serializers.ModelSerializer):
     sender_address = SenderAddressSerializer()
     client_address = ClientAddressSerializer()
     items = ItemSerializer(many=True)
+    payment_due = serializers.DateTimeField(format="%d %b %Y")
 
     class Meta:
         model = Invoice
         fields = [
             "id",
             "invoice_no",
+            "created_at",
             "description",
             "payment_terms",
             "payment_due",
@@ -97,22 +56,30 @@ class InvoiceSerializer(serializers.ModelSerializer):
             "items",
             "total",
         ]
+    
+    def create(self, validated_data):
+        user = self.context["request"].user
+        client_address_data = validated_data.pop("client_address")
+        sender_address_data = validated_data.pop("sender_address")
+        items_data = validated_data.pop("items")
+        invoice = Invoice.objects.create(
+            user=user, **validated_data
+        )
+        ClientAddress.objects.create(invoice=invoice, **client_address_data)
+        SenderAddress.objects.create(invoice=invoice, **sender_address_data)
+        for item_data in items_data:
+            Item.objects.create(invoice=invoice, **item_data)
+        return invoice
 
     def update(self, instance, validated_data):
         client_address_data = validated_data.pop("client_address")
         sender_address_data = validated_data.pop("sender_address")
         items_data = validated_data.pop("items")
-        # try:
-        #     items_data = validated_data.pop("items")
-        # except KeyError:
-        #     items_data = []
-
         if validated_data.get("status") == "pending" and instance.status == "draft":
             payment_due = datetime.now() + timedelta(
                 days=validated_data.get("payment_terms")
             )
             instance.payment_due = payment_due
-            instance.created_at = timezone.now()
         instance.description = validated_data.get("description", instance.description)
         instance.payment_terms = validated_data.get(
             "payment_terms", instance.payment_terms

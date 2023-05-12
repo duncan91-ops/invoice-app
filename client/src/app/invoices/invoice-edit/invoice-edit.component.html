@@ -1,1 +1,217 @@
-<p>invoice-edit works!</p>
+<form class="form" [formGroup]="editForm" (click)="$event.stopPropagation()">
+  <div class="container">
+    <h2 class="title">edit invoice</h2>
+    <div class="fieldset sender" formGroupName="sender_address">
+      <h3 class="legend sender__title">bill from</h3>
+      <div class="input-container">
+        <label for="sender__street" class="label">street address</label>
+        <input
+          type="text"
+          id="sender__street"
+          class="input sender__street"
+          formControlName="street"
+        />
+      </div>
+      <div class="others">
+        <div class="input-container">
+          <label for="sender__city" class="label">city</label>
+          <input
+            type="text"
+            id="sender__city"
+            class="input sender__city"
+            formControlName="city"
+          />
+        </div>
+        <div class="input-container">
+          <label for="sender__code" class="label">post code</label>
+          <input
+            type="text"
+            id="sender__code"
+            class="input sender__code"
+            formControlName="post_code"
+          />
+        </div>
+        <div class="input-container">
+          <label for="sender__country" class="label">country</label>
+          <input
+            type="text"
+            id="sender__country"
+            class="input sender__country"
+            formControlName="country"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="fieldset client">
+      <h3 class="legend client__title">bill from</h3>
+      <div class="input-container">
+        <label for="client__name" class="label">client's name</label>
+        <input
+          type="text"
+          id="client__name"
+          class="input client__name"
+          formControlName="client_name"
+        />
+      </div>
+      <div class="input-container">
+        <label for="client__email" class="label">client's email</label>
+        <input
+          type="email"
+          id="client__email"
+          class="input client__email"
+          formControlName="client_email"
+        />
+      </div>
+      <ng-container formGroupName="client_address">
+        <div class="input-container">
+          <label for="client__street" class="label">street address</label>
+          <input
+            type="text"
+            id="client__street"
+            class="input client__street"
+            formControlName="street"
+          />
+        </div>
+        <div class="others">
+          <div class="input-container">
+            <label for="client__city" class="label">city</label>
+            <input
+              type="text"
+              id="client__city"
+              class="input client__city"
+              formControlName="city"
+            />
+          </div>
+          <div class="input-container">
+            <label for="client__code" class="label">post code</label>
+            <input
+              type="text"
+              id="client__code"
+              class="input client__code"
+              formControlName="post_code"
+            />
+          </div>
+          <div class="input-container">
+            <label for="client__country" class="label">country</label>
+            <input
+              type="text"
+              id="client__country"
+              class="input client__country"
+              formControlName="country"
+            />
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <div class="fieldset">
+      <div class="input-container">
+        <p class="label">payment terms</p>
+        <button
+          class="btn btn__terms"
+          (click)="showPaymentTerms = !showPaymentTerms"
+        >
+          <span class="btn__terms-text"
+            >net {{ getPaymentTerms() }} day{{
+              getPaymentTerms() > 1 ? "s" : ""
+            }}</span
+          >
+          <svg
+            class="btn__terms-icon"
+            [ngClass]="{ open: showPaymentTerms }"
+            width="11"
+            height="7"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M1 1l4.228 4.228L9.456 1"
+              stroke="#7C5DFA"
+              stroke-width="2"
+              fill="none"
+              fill-rule="evenodd"
+            />
+          </svg>
+        </button>
+        <ul class="terms" *ngIf="showPaymentTerms && terms.length > 0">
+          <li class="terms__item" *ngFor="let term of terms">
+            <button class="btn btn__term" (click)="setPaymentTerms(term)">
+              net {{ term }} day{{ term > 1 ? "s" : "" }}
+            </button>
+          </li>
+        </ul>
+      </div>
+      <div class="input-container">
+        <label for="description" class="label">description</label>
+        <input type="text" id="description" class="input description" />
+      </div>
+    </div>
+    <div class="items">
+      <h2 class="items__title">item list</h2>
+      <div class="items__labels">
+        <p class="items__label name">item name</p>
+        <p class="items__label quantity">qty</p>
+        <p class="items__label price">price</p>
+        <p class="items__label total">total</p>
+      </div>
+      <div
+        class="items__list"
+        formArrayName="items"
+        *ngFor="let item of items.controls; let i = index"
+      >
+        <div class="items__item" [formGroupName]="i">
+          <input type="text" formControlName="name" class="input name" />
+          <input
+            type="number"
+            #quantity
+            formControlName="quantity"
+            class="input quantity"
+          />
+          <input
+            type="number"
+            formControlName="price"
+            #price
+            class="input price"
+          />
+          <input
+            type="text"
+            formControlName="total"
+            class="input total"
+            [value]="calculateItemTotal(quantity.value, price.value, i)"
+          />
+          <button
+            class="btn btn__remove-item"
+            type="button"
+            (click)="items.removeAt(i)"
+          >
+            <svg width="13" height="16" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M11.583 3.556v10.666c0 .982-.795 1.778-1.777 1.778H2.694a1.777 1.777 0 01-1.777-1.778V3.556h10.666zM8.473 0l.888.889h3.111v1.778H.028V.889h3.11L4.029 0h4.444z"
+                fill="#888EB0"
+                fill-rule="nonzero"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <button class="btn btn__add-item" type="button" (click)="addItem()">
+        + add new item
+      </button>
+    </div>
+  </div>
+  <div class="form__btns">
+    <div class="form__btns-container">
+      <button
+        class="btn btn__discard"
+        type="button"
+        (click)="this.editForm.reset()"
+      >
+        Discard
+      </button>
+      <div class="right">
+        <button class="btn btn__draft" type="button" (click)="saveAsDraft()">
+          Save as Draft
+        </button>
+        <button class="btn btn__save">Save & Send</button>
+      </div>
+    </div>
+  </div>
+</form>

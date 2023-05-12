@@ -29,7 +29,8 @@
 }
 
 .btn {
-  &__join {
+  &__join,
+  &__invoices {
     background-color: var(--cta-primary);
     display: inline-block;
     padding: 2rem 3.5rem;

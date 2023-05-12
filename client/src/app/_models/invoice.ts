@@ -1,5 +1,5 @@
-export interface Item {
-  id: string;
+export interface IItem {
+  id?: string;
   name: string;
   quantity: number;
   price: number;
@@ -27,6 +27,6 @@ export interface IInvoice {
     post_code: string;
   };
   status: string;
-  items: Item[];
+  items: IItem[];
   total: number;
 }

@@ -1,8 +1,10 @@
 import random
 import string
+from datetime import timedelta
 
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from apps.common.models import TimeStampedUUIDModel, Address
@@ -37,7 +39,7 @@ class Invoice(TimeStampedUUIDModel):
         default=PaymentTerms.ONE,
     )
     payment_due = models.DateTimeField(
-        verbose_name=_("Payment Due Date"), blank=True, null=True
+        verbose_name=_("Payment Due Date")
     )
     client_name = models.CharField(
         verbose_name=_("Client Name"), max_length=150, blank=True

@@ -1,1 +1,105 @@
-<p>invoice-detail works!</p>
+<section class="invoice">
+  <div class="overlay" (click)="showEditForm = false" *ngIf="showEditForm">
+    <app-invoice-edit></app-invoice-edit>
+  </div>
+  <div class="invoice__container">
+    <button class="btn btn__back" type="button">
+      <svg
+        class="btn__back-icon"
+        width="7"
+        height="10"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M6.342.886L2.114 5.114l4.228 4.228"
+          stroke="#9277FF"
+          stroke-width="2"
+          fill="none"
+          fill-rule="evenodd"
+        />
+      </svg>
+      <span class="btn__back-text">go back</span>
+    </button>
+    <header class="header">
+      <div class="status">
+        <span class="status__label">status</span>
+        <div
+          class="status__box"
+          [ngClass]="{
+            pending: invoice.status === 'pending',
+            draft: invoice.status === 'draft',
+            paid: invoice.status === 'paid'
+          }"
+        >
+          <div class="status__dot"></div>
+          <span class="status__text">{{ invoice.status }}</span>
+        </div>
+      </div>
+      <div class="header__btns">
+        <button class="btn btn__edit">Edit</button>
+        <button class="btn btn__delete">Delete</button>
+        <button class="btn btn__paid">Mark as Paid</button>
+      </div>
+    </header>
+    <div class="details">
+      <div class="main">
+        <div class="title">
+          <span class="number"
+            ><span class="hash">#</span>{{ invoice.invoice_no }}</span
+          >
+          <p class="description">{{ invoice.description }}</p>
+        </div>
+        <div class="sender address">
+          <span class="street">{{ invoice.sender_address.street }}</span>
+          <span class="city">{{ invoice.sender_address.city }}</span>
+          <span class="code">{{ invoice.sender_address.post_code }}</span>
+          <span class="country">{{ invoice.sender_address.country }}</span>
+        </div>
+        <div class="dates">
+          <div class="created">
+            <span class="created__label">Invoice Date</span>
+            <span class="created__value"></span>
+          </div>
+          <div class="due">
+            <span class="due__label">Payment Due</span>
+            <span class="due__value">{{ invoice.payment_due }}</span>
+          </div>
+        </div>
+        <div class="client">
+          <p class="client__label">Bill To</p>
+          <div class="address">
+            <p class="name">{{ invoice.client_name }}</p>
+            <span class="street">{{ invoice.client_address.street }}</span>
+            <span class="city">{{ invoice.client_address.city }}</span>
+            <span class="code">{{ invoice.client_address.post_code }}</span>
+            <span class="country">{{ invoice.client_address.country }}</span>
+          </div>
+        </div>
+        <div class="sent">
+          <span class="sent__label">Sent to</span>
+          <span class="sent__value">{{ invoice.client_email }}</span>
+        </div>
+      </div>
+      <div class="items">
+        <div class="items__labels">
+          <span class="items__label left">item name</span>
+          <span class="items__label upper">qty.</span>
+          <span class="items__label">price</span>
+          <span class="items__label">total</span>
+        </div>
+        <ul class="items__list">
+          <li class="item" *ngFor="let item of invoice.items">
+            <span class="item__value item__name left">{{ item.name }}</span>
+            <span class="item__value item__quantity">{{ item.quantity }}</span>
+            <span class="item__value item__price">£ {{ item.price }}</span>
+            <span class="item__value item__total">£ {{ item.total }}</span>
+          </li>
+        </ul>
+      </div>
+      <div class="total">
+        <p class="total__label">amount due</p>
+        <p class="total__value">£ {{ invoice.total }}</p>
+      </div>
+    </div>
+  </div>
+</section>

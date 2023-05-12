@@ -7,6 +7,7 @@ import { IToken, IRegister, ILogin, IUser, IActivate, IRegisterData } from './au
 const REGISTER_URL = '/api/v1/auth/users/'
 const GET_USER_URL = '/api/v1/auth/users/me/'
 const LOGIN_URL = '/api/v1/auth/jwt/create/'
+const REFRESH_URL = '/api/v1/auth/jwt/refresh/'
 const ACTIVATION_URL = '/api/v1/auth/users/activation/'
 
 @Injectable({
@@ -15,6 +16,8 @@ const ACTIVATION_URL = '/api/v1/auth/users/activation/'
 export class AuthService {
   private userSubject = new BehaviorSubject<IUser | null>(null)
   user$ = this.userSubject.asObservable();
+  private isLoggedInSubject = new BehaviorSubject<boolean>(false)
+  isLoggedIn$ = this.isLoggedInSubject.asObservable();
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -29,6 +32,7 @@ export class AuthService {
       this.getUser(token).subscribe({
         next: (user) => {
           this.userSubject.next(user)
+          this.isLoggedInSubject.next(true)
         }
       })
       const tokenString = JSON.stringify(token)
@@ -40,6 +44,7 @@ export class AuthService {
   logout() {
     this.userSubject.next(null)
     localStorage.removeItem('token')
+    this.isLoggedInSubject.next(false)
   }
 
   register(registerData: IRegister): Observable<IRegisterData> {
@@ -53,10 +58,12 @@ export class AuthService {
   getToken() {
     const tokenString = localStorage.getItem('token')
     const token = JSON.parse(tokenString || '{}') as IToken
-    if (token.access?.length > 0) {
-      return token
-    }
-    return null
+    return token
+  }
+
+  refreshToken() {
+    const token = this.getToken()
+    return this.http.post<{access: string}>(REFRESH_URL, {refresh: token.refresh}, this.httpOptions)
   }
 
   getUser(token: IToken) {
@@ -76,6 +83,7 @@ export class AuthService {
       })
     }).subscribe((user) => {
       this.userSubject.next(user)
+      this.isLoggedInSubject.next(true)
     })
   }
 }

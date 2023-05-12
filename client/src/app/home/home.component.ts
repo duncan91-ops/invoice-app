@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../auth/auth.service';
+
+import { UserService } from '@app/_services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -7,8 +8,8 @@ import { AuthService } from '../auth/auth.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-  user$ = this.authService.user$
+  user$ = this.userService.user$
 
-  constructor(private authService: AuthService) {}
+  constructor(private userService: UserService) {}
 
 }

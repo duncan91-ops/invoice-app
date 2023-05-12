@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './home/home.component';
 import { darkTheme } from './theme/dark-theme';
 import {lightTheme} from './theme/light-theme';
+import { authInterceptorProviders } from './_helpers/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import {lightTheme} from './theme/light-theme';
     RouterModule,
     AppRoutingModule,
   ],
-  providers: [],
+  providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

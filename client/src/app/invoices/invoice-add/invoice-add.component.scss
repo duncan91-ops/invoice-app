@@ -88,6 +88,18 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  position: relative;
+
+  &.error {
+    .label {
+      color: var(--cta-secondary);
+    }
+
+    .input,
+    .btn__terms {
+      border: 1px solid var(--cta-secondary);
+    }
+  }
 }
 
 .others {
@@ -118,6 +130,25 @@
   &:focus {
     outline: none;
     border: 1px solid var(--input-focus-border);
+  }
+}
+
+.terms {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: calc(100% + 0.8rem);
+  background-color: var(--input-bg);
+  z-index: 10;
+  box-shadow: var(--shadow-primary);
+  border-radius: 8px 8px 8px 8px;
+
+  &__item {
+    padding: 1.7rem 2rem;
+  }
+
+  &__item:not(:last-child) {
+    border: 1px solid var(--input-border);
   }
 }
 
@@ -173,6 +204,12 @@
     align-items: center;
     gap: 1.6rem;
 
+    .input {
+      &.error {
+        border: 1px solid var(--cta-secondary);
+      }
+    }
+
     .name {
       width: 21.4rem;
     }
@@ -209,6 +246,39 @@
 }
 
 .btn {
+  &__terms {
+    font-family: "Spartan Bold", sans-serif;
+    font-size: 1.2rem;
+    line-height: 1.5rem;
+    padding: 1.7rem 2rem;
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--text-primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-transform: capitalize;
+    transition: 0.3s border ease-in;
+
+    &:hover {
+      border: 1px solid var(--input-focus-border);
+    }
+  }
+
+  &__terms-icon {
+    &.open {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__term {
+    font-family: "Spartan Bold", sans-serif;
+    font-size: 1.2rem;
+    line-height: 1.5rem;
+    color: var(--text-primary);
+    text-transform: capitalize;
+  }
+
   &__add-item {
     padding: 1.7rem 0;
     text-align: center;
