@@ -17,6 +17,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(default=timezone.now)
+    total_invoice_count = models.IntegerField(verbose_name=_("Total Invoice Count"), default=0)
+    draft_invoice_count = models.IntegerField(verbose_name=_("Draft Invoice Count"), default=0)
+    pending_invoice_count = models.IntegerField(verbose_name=_("Pending Invoice Count"), default=0)
+    paid_invoice_count = models.IntegerField(verbose_name=_("Paid Invoice Count"), default=0)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name"]

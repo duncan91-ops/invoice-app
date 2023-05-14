@@ -2,19 +2,42 @@ from datetime import timedelta
 
 from django.utils import timezone
 
-from rest_framework import generics, permissions, status
+import django_filters
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters, generics, permissions, status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .exceptions import InvoiceNotFound, NotYourInvoice
-from .models import Invoice, Item
+from .models import Invoice
+from .pagination import InvoicePagination
 from .serializers import InvoiceSerializer, InvoiceCreateSerializer, InvoiceUpdateSerializer
+
+
+class InvoiceFilter(django_filters.filterset):
+    status = django_filters.CharFilter(field_name="status", lookup_expr='iexact')
+    client_email = django_filters.CharFilter(field_name="client_email", lookup_expr="iexact")
+
+    class Meta:
+        model = Invoice
+        fields = [
+            'status',
+            'client_email',
+        ]
 
 
 class InvoiceListAPIView(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = InvoiceSerializer
+    pagination_class = InvoicePagination
+    filter_backends = [
+        DjangoFilterBackend,
+        filters.OrderingFilter,
+    ]
+    filterset_class = InvoiceFilter
+    ordering_fields = ['created_at']
+    ordering = ['-created_at']
 
     def get_queryset(self):
         user = self.request.user
@@ -87,29 +110,6 @@ def delete_invoice_api_view(request, invoice_id):
         )
 
     delete_operation = invoice.delete()
-    if delete_operation:
-        return Response({"success": "Deletion Successful"})
-    return Response({"failure": "Deletion failed"})
-
-
-@api_view(["DELETE"])
-@permission_classes([permissions.IsAuthenticated])
-def delete_item_api_view(request, item_id):
-    try:
-        item = Item.objects.get(id=item_id)
-    except Item.DoesNotExist:
-        return Response(
-            {"error": "item does not exist"}, status=status.HTTP_404_NOT_FOUND
-        )
-
-    user_email = item.invoice.user.email
-    if user_email != request.user.email:
-        return Response(
-            {"error": "Cannot delete invoice that does not belong to you"},
-            status=status.HTTP_403_FORBIDDEN,
-        )
-
-    delete_operation = item.delete()
     if delete_operation:
         return Response({"success": "Deletion Successful"})
     return Response({"failure": "Deletion failed"})

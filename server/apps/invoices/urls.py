@@ -6,7 +6,6 @@ from .views import (
     InvoiceDetailAPIView,
     InvoiceUpdateAPIView,
     delete_invoice_api_view,
-    delete_item_api_view,
 )
 
 urlpatterns = [
@@ -19,5 +18,4 @@ urlpatterns = [
         name="invoice_update",
     ),
     path("<str:invoice_id>/delete/", delete_invoice_api_view, name="invoice_delete"),
-    path("items/delete/<str:item_id>/", delete_item_api_view, name="item_delete"),
 ]

@@ -36,6 +36,10 @@ class UserSerializer(serializers.ModelSerializer):
             "city",
             "street",
             "post_code",
+            "total_invoice_count",
+            "draft_invoice_count",
+            "pending_invoice_count",
+            "paid_invoice_count",
         ]
 
     def get_first_name(self, obj):
