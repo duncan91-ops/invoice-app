@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -6,7 +6,6 @@ import {
   FormArray,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
 
 import { InvoicesService } from '@app/_services/invoices.service';
 
@@ -42,8 +41,7 @@ export class InvoiceAddComponent {
 
   constructor(
     private fb: FormBuilder,
-    private invoiceService: InvoicesService,
-    private router: Router
+    private invoiceService: InvoicesService
   ) {}
 
   createItem(): FormGroup {
@@ -177,7 +175,7 @@ export class InvoiceAddComponent {
     this.invoiceService.createInvoice(this.addForm.value).subscribe({
       next: (invoice) => {
         console.log(invoice);
-        this.router.navigate(['/invoices']);
+        window.location.reload();
       },
       error: (err) => {
         console.log(err);
@@ -192,10 +190,7 @@ export class InvoiceAddComponent {
 
     this.setTotal();
 
-    if (this.addForm.valid) {
-      this.save();
-      window.location.reload();
-    }
+    this.save();
   }
 
   saveAndSend() {
@@ -209,7 +204,6 @@ export class InvoiceAddComponent {
 
     if (this.addForm.valid) {
       this.save();
-      window.location.reload();
     }
   }
 }

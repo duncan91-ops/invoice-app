@@ -38,13 +38,13 @@ export class InvoicesService {
     return this.http.post<IInvoice>(URL, invoiceData, httpOptions);
   }
 
-  updateInvoice(invoiceData: IInvoice) {
-    const URL = `/api/v1/invoices/${invoiceData.id}/create/`;
-    return this.http.put<IInvoice>(URL, invoiceData, httpOptions);
+  updateInvoice(id: string, invoiceData: IInvoice) {
+    const URL = `/api/v1/invoices/${id}/update/`;
+    return this.http.patch<IInvoice>(URL, invoiceData, httpOptions);
   }
 
   deleteInvoice(id: string) {
-    const URL = `/api/v1/invoices/${id}/create/`;
-    return this.http.delete(URL, httpOptions);
+    const URL = `/api/v1/invoices/${id}/delete/`;
+    return this.http.delete<{ [key: string]: string }>(URL, httpOptions);
   }
 }

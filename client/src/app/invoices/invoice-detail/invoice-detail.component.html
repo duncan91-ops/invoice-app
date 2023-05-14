@@ -1,9 +1,17 @@
 <section class="invoice">
-  <div class="overlay" (click)="showEditForm = false" *ngIf="showEditForm">
-    <app-invoice-edit></app-invoice-edit>
+  <div class="overlay" (click)="closeModal()" *ngIf="modalOpen">
+    <app-invoice-edit
+      [invoice]="invoice"
+      *ngIf="showEditForm"
+    ></app-invoice-edit>
+    <app-invoice-delete
+      [invoice]="invoice"
+      (close)="closeModal()"
+      *ngIf="showDeleteForm"
+    ></app-invoice-delete>
   </div>
   <div class="invoice__container">
-    <button class="btn btn__back" type="button">
+    <button class="btn btn__back" type="button" (click)="goBack()">
       <svg
         class="btn__back-icon"
         width="7"
@@ -36,9 +44,19 @@
         </div>
       </div>
       <div class="header__btns">
-        <button class="btn btn__edit">Edit</button>
-        <button class="btn btn__delete">Delete</button>
-        <button class="btn btn__paid">Mark as Paid</button>
+        <button class="btn btn__edit" type="button" (click)="openEditForm()">
+          Edit
+        </button>
+        <button
+          class="btn btn__delete"
+          type="button"
+          (click)="openDeleteForm()"
+        >
+          Delete
+        </button>
+        <button class="btn btn__paid" [disabled]="invoice.status !== 'pending'">
+          Mark as Paid
+        </button>
       </div>
     </header>
     <div class="details">
@@ -58,7 +76,7 @@
         <div class="dates">
           <div class="created">
             <span class="created__label">Invoice Date</span>
-            <span class="created__value"></span>
+            <span class="created__value">{{ invoice.created_at }}</span>
           </div>
           <div class="due">
             <span class="due__label">Payment Due</span>

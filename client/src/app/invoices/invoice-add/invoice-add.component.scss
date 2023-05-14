@@ -38,18 +38,34 @@
       border-radius: 24px;
 
       &__discard {
-        background-color: #f9fafe;
-        color: #7e88c3;
+        background-color: var(--btn-bg-primary);
+        color: var(--text-secondary);
+        transition: 0.3s background-color ease-in, 0.3s color ease-in;
+
+        &:hover {
+          background-color: var(--btn-hover-bg-primary);
+          color: #7e88c3;
+        }
       }
 
       &__draft {
         background-color: #373b53;
-        color: #888eb0;
+        color: var(--btn-draft);
+        transition: 0.3s background-color ease-in;
+
+        &:hover {
+          background-color: var(--btn-draft-hover-bg);
+        }
       }
 
       &__save {
         background-color: var(--cta-primary);
         color: #fff;
+        transition: 0.3s background-color ease-in;
+
+        &:hover {
+          background-color: var(--cta-primary-light);
+        }
       }
     }
   }

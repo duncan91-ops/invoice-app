@@ -9,6 +9,7 @@ export interface IItem {
 export interface IInvoice {
   id?: string;
   invoice_no?: string;
+  created_at: string;
   description: string;
   payment_terms: number;
   payment_due?: string;

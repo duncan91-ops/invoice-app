@@ -1,4 +1,9 @@
-<form class="form" [formGroup]="editForm" (click)="$event.stopPropagation()">
+<form
+  class="form"
+  [formGroup]="editForm"
+  (click)="$event.stopPropagation()"
+  (ngSubmit)="save()"
+>
   <div class="container">
     <h2 class="title">edit invoice</h2>
     <div class="fieldset sender" formGroupName="sender_address">
@@ -141,7 +146,12 @@
       </div>
       <div class="input-container">
         <label for="description" class="label">description</label>
-        <input type="text" id="description" class="input description" />
+        <input
+          type="text"
+          id="description"
+          class="input description"
+          formControlName="description"
+        />
       </div>
     </div>
     <div class="items">
@@ -199,19 +209,10 @@
   </div>
   <div class="form__btns">
     <div class="form__btns-container">
-      <button
-        class="btn btn__discard"
-        type="button"
-        (click)="this.editForm.reset()"
-      >
-        Discard
+      <button class="btn btn__save" type="submit">Save Changes</button>
+      <button class="btn btn__cancel" type="button" (click)="reset()">
+        Cancel
       </button>
-      <div class="right">
-        <button class="btn btn__draft" type="button" (click)="saveAsDraft()">
-          Save as Draft
-        </button>
-        <button class="btn btn__save">Save & Send</button>
-      </div>
     </div>
   </div>
 </form>

@@ -105,17 +105,23 @@
   background-color: var(--bg-invoice-item);
   box-shadow: 0px 10px 10px -10px rgba(72, 84, 159, 0.100397);
   border-radius: 8px;
+  border: 1px solid var(--bg-invoice-item);
+  transition: 0.3s border ease-in;
+
+  &:hover {
+    border: 1px solid var(--cta-primary);
+  }
 
   &__link {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(3, max-content) 1fr repeat(2, min-content);
     align-items: center;
     width: 100%;
-    height: 100%;
     padding: 1.6rem 3.2rem;
   }
 
   .number {
+    width: 10.3rem;
     font-size: 1.2rem;
     line-height: 1.5rem;
     letter-spacing: -0.25px;
@@ -128,6 +134,7 @@
   }
 
   .due {
+    width: 15.1rem;
     text-transform: capitalize;
     color: var(--text-secondary);
     font-size: 1.2rem;
@@ -144,6 +151,7 @@
   }
 
   .total {
+    justify-self: end;
     font-size: 1.6rem;
     line-height: 2.4rem;
     letter-spacing: -0.8px;
@@ -153,6 +161,7 @@
   }
 
   .status {
+    margin: 0 2rem 0 4rem;
     display: flex;
     align-items: center;
     gap: 0.8rem;
@@ -190,11 +199,11 @@
     }
 
     &.draft {
-      background-color: var(--status-tertiary-bg);
-      color: var(--status-tertiary);
+      background-color: var(--draft-bg);
+      color: var(--draft);
 
       .status__dot {
-        background-color: var(--status-tertiary);
+        background-color: var(--draft);
       }
     }
   }

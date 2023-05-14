@@ -41,13 +41,13 @@
       <ul class="items" *ngIf="invoices.length > 0">
         <li class="item" *ngFor="let invoice of invoices">
           <a [routerLink]="['/invoices', invoice.id]" class="item__link">
-            <span class="number"
-              ><span class="hash">#</span>{{ invoice.invoice_no }}</span
-            >
-            <span class="due">due {{ invoice.payment_due }}</span>
-            <span class="name">{{ invoice.client_name }}</span>
-            <span class="total">£ {{ invoice.total }}</span>
-            <span
+            <p class="number">
+              <span class="hash">#</span>{{ invoice.invoice_no }}
+            </p>
+            <p class="due">due {{ invoice.payment_due }}</p>
+            <p class="name">{{ invoice.client_name }}</p>
+            <p class="total">£ {{ invoice.total }}</p>
+            <div
               class="status"
               [ngClass]="{
                 pending: invoice.status === 'pending',
@@ -57,7 +57,7 @@
             >
               <span class="status__dot"></span>
               <span class="status__text">{{ invoice.status }}</span>
-            </span>
+            </div>
             <svg width="7" height="10" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M1 1l4 4-4 4"

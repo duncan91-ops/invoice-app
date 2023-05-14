@@ -1,0 +1,16 @@
+<section class="delete" (click)="$event.stopPropagation()">
+  <h2 class="delete__title">confirm deletion</h2>
+  <p class="delete__message">
+    Are you sure you want to delete invoice #{{ invoice.invoice_no }}? This
+    action cannot be undone.
+  </p>
+  <div class="delete__btns">
+    <p class="delete__error" *ngIf="errorMessage">{{ errorMessage }}</p>
+    <button class="btn delete__btn remove" type="button" (click)="delete()">
+      delete
+    </button>
+    <button class="btn delete__btn cancel" type="button" (click)="close.emit()">
+      cancel
+    </button>
+  </div>
+</section>
