@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 
 from .exceptions import InvoiceNotFound, NotYourInvoice
 from .models import Invoice, Item
-from .serializers import InvoiceSerializer, InvoiceCreateSerializer
+from .serializers import InvoiceSerializer, InvoiceCreateSerializer, InvoiceUpdateSerializer
 
 
 class InvoiceListAPIView(generics.ListAPIView):
@@ -62,7 +62,7 @@ class InvoiceUpdateAPIView(APIView):
             return NotYourInvoice
 
         data = request.data
-        serializer = InvoiceSerializer(instance=invoice, data=data)
+        serializer = InvoiceUpdateSerializer(instance=invoice, data=data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)

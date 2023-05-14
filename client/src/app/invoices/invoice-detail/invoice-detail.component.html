@@ -1,6 +1,7 @@
 <section class="invoice">
   <div class="overlay" (click)="closeModal()" *ngIf="modalOpen">
     <app-invoice-edit
+      (close)="closeModal()"
       [invoice]="invoice"
       *ngIf="showEditForm"
     ></app-invoice-edit>
@@ -44,7 +45,12 @@
         </div>
       </div>
       <div class="header__btns">
-        <button class="btn btn__edit" type="button" (click)="openEditForm()">
+        <button
+          class="btn btn__edit"
+          type="button"
+          [disabled]="invoice.status !== 'draft'"
+          (click)="openEditForm()"
+        >
           Edit
         </button>
         <button
@@ -54,9 +60,15 @@
         >
           Delete
         </button>
-        <button class="btn btn__paid" [disabled]="invoice.status !== 'pending'">
+        <button
+          class="btn btn__paid"
+          [disabled]="invoice.status !== 'pending'"
+          type="button"
+          (click)="markAsPaid()"
+        >
           Mark as Paid
         </button>
+        <p class="header__error" *ngIf="errorMessage">{{ errorMessage }}</p>
       </div>
     </header>
     <div class="details">

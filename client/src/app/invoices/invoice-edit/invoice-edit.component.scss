@@ -24,6 +24,7 @@
     flex-direction: row-reverse;
     align-items: center;
     gap: 0.8rem;
+    position: relative;
 
     .btn {
       padding: 1.7rem 2.4rem;
@@ -54,6 +55,14 @@
       }
     }
   }
+
+  &__error {
+    color: var(--cta-secondary);
+    font-size: 1.2rem;
+    position: absolute;
+    left: 5.6rem;
+    bottom: 2rem;
+  }
 }
 
 .container {
@@ -69,6 +78,10 @@
   line-height: 3.2rem;
   color: var(--text-primary);
   text-transform: capitalize;
+
+  .hash {
+    color: #888eb0;
+  }
 }
 
 .fieldset {

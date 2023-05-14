@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { IInvoice } from '@app/_models';
+import { InvoicesService } from '@app/_services/invoices.service';
 
 @Component({
   selector: 'app-invoice-detail',
@@ -14,8 +15,13 @@ export class InvoiceDetailComponent {
   showEditForm = false;
   showDeleteForm = false;
   invoice: IInvoice = this.route.snapshot.data['invoice'];
+  errorMessage: string = '';
 
-  constructor(private route: ActivatedRoute, private location: Location) {}
+  constructor(
+    private route: ActivatedRoute,
+    private location: Location,
+    private invoiceService: InvoicesService
+  ) {}
 
   goBack = () => {
     this.location.back();
@@ -36,4 +42,24 @@ export class InvoiceDetailComponent {
     this.modalOpen = true;
     this.showDeleteForm = true;
   };
+
+  markAsPaid() {
+    this.invoiceService
+      .updateInvoice(this.invoice.id!, {
+        ...this.invoice,
+        status: 'paid',
+      })
+      .subscribe({
+        next: () => {
+          this.errorMessage = '';
+          window.location.reload();
+        },
+        error: (err) => {
+          this.errorMessage =
+            err.error.error ||
+            err.error.detail ||
+            'Operation failed. Please try again later.';
+        },
+      });
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -17,7 +17,9 @@ import { IInvoice } from '@app/_models';
 })
 export class InvoiceEditComponent implements OnInit {
   terms = [1, 7, 14, 30];
+  errorMessage: string = '';
   @Input() invoice!: IInvoice;
+  @Output() close = new EventEmitter();
   editForm: FormGroup = this.fb.group({
     sender_address: this.fb.group({
       street: '',
@@ -52,38 +54,39 @@ export class InvoiceEditComponent implements OnInit {
 
   reset() {
     this.editForm.patchValue({
-      sender_address: this.fb.group({
+      sender_address: {
         street: this.invoice.sender_address.street,
         city: this.invoice.sender_address.city,
         post_code: this.invoice.sender_address.post_code,
         country: this.invoice.sender_address.country,
-      }),
+      },
       payment_terms: this.invoice.payment_terms,
       client_name: this.invoice.client_name,
       client_email: this.invoice.client_email,
-      client_address: this.fb.group({
+      client_address: {
         street: this.invoice.client_address.street,
         city: this.invoice.client_address.city,
         post_code: this.invoice.client_address.post_code,
         country: this.invoice.client_address.country,
-      }),
+      },
       description: this.invoice.description,
       status: this.invoice.status,
       total: this.invoice.total,
+      items: [...this.invoice.items],
     });
 
-    const groups = [];
-    for (let item of this.invoice.items) {
-      groups.push(
-        this.fb.group({
-          name: item.name,
-          quantity: item.quantity,
-          price: item.price,
-          total: item.total,
-        })
-      );
-    }
-    this.editForm.setControl('items', this.fb.array(groups));
+    // const groups = [];
+    // for (let item of this.invoice.items) {
+    //   groups.push(
+    //     this.fb.group({
+    //       name: item.name,
+    //       quantity: item.quantity,
+    //       price: item.price,
+    //       total: item.total,
+    //     })
+    //   );
+    // }
+    // this.editForm.setControl('items', this.fb.array(groups));
   }
 
   createItem(): FormGroup {
@@ -232,12 +235,15 @@ export class InvoiceEditComponent implements OnInit {
       this.invoiceService
         .updateInvoice(this.invoice.id!, this.editForm.value)
         .subscribe({
-          next: (invoice) => {
-            console.log(invoice);
+          next: () => {
+            this.errorMessage = '';
             window.location.reload();
           },
           error: (err) => {
-            console.log(err);
+            this.errorMessage =
+              err.error.error ||
+              err.error.detail ||
+              'Operation failed. Please try again later.';
           },
         });
     }

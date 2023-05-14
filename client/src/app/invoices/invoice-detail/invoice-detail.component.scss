@@ -49,6 +49,11 @@
       background-color: var(--btn-hover-bg-primary);
       color: #7e88c3;
     }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
   }
 
   &__delete {
@@ -100,6 +105,16 @@
     display: flex;
     align-items: center;
     gap: 0.8rem;
+    position: relative;
+  }
+
+  &__error {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transform: translateY(100%);
+    color: var(--cta-secondary);
+    font-size: 1.2rem;
   }
 }
 
