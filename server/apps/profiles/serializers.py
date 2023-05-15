@@ -15,10 +15,6 @@ class ProfileSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(source="user.first_name")
     last_name = serializers.CharField(source="user.last_name")
     full_name = serializers.SerializerMethodField(read_only=True)
-    total_invoice_count = serializers.IntegerField(source="user.total_invoice_count")
-    draft_invoice_count = serializers.IntegerField(source="user.draft_invoice_count")
-    pending_invoice_count = serializers.IntegerField(source="user.pending_invoice_count")
-    paid_invoice_count = serializers.IntegerField(source="user.paid_invoice_count")
     profile_photo = ProfilePhotoSerializer()
     country = CountryField(name_only=True)
 
@@ -38,10 +34,6 @@ class ProfileSerializer(serializers.ModelSerializer):
             "city",
             "street",
             "post_code",
-            "total_invoice_count",
-            "draft_invoice_count",
-            "pending_invoice_count",
-            "paid_invoice_count",
         ]
 
     def get_full_name(self, obj):

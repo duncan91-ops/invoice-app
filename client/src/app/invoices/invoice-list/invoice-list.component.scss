@@ -6,10 +6,23 @@
   &__container {
     width: 87.5%;
     max-width: 73rem;
-    margin: 0 auto;
+    margin: 0 auto 5rem;
     display: flex;
     flex-direction: column;
     gap: 6.5rem;
+  }
+
+  &__nav {
+    position: absolute;
+    bottom: 7.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 87.5%;
+    max-width: 73rem;
+    margin: 0 auto;
   }
 }
 
@@ -55,6 +68,60 @@
   display: flex;
   align-items: center;
   position: relative;
+
+  &__options {
+    width: 19.2rem;
+    position: absolute;
+    left: -3.7rem;
+    bottom: 0;
+    transform: translateY(calc(100% + 8px));
+    padding: 2.4rem;
+    background-color: var(--bg-filter);
+    box-shadow: var(--filter-shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.6rem;
+    border-radius: 8px;
+  }
+
+  &__option-btn {
+    display: flex;
+    gap: 1.3rem;
+    align-items: center;
+  }
+
+  &__option-box {
+    width: 1.6rem;
+    height: 1.6rem;
+    border: 1px solid var(--cta-primary);
+    background-color: var(--bg-checkbox);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2px;
+    transition: 0.3s background-color ease-in;
+
+    .check {
+      display: none;
+    }
+
+    &.selected {
+      background-color: var(--cta-primary);
+
+      .check {
+        display: block;
+      }
+    }
+  }
+
+  &__option-text {
+    font-family: "Spartan Bold", sans-serif;
+    font-size: 1.2rem;
+    line-height: 1.5rem;
+    text-transform: capitalize;
+    color: var(--text-primary);
+  }
 }
 
 .btn {
@@ -65,6 +132,12 @@
     font-size: 1.2rem;
     color: var(--text-primary);
     font-family: "Spartan Bold", sans-serif;
+  }
+
+  &__filter-icon {
+    &.show {
+      transform: rotate(180deg);
+    }
   }
 
   &__add {
@@ -92,6 +165,27 @@
     height: 3.2rem;
     border-radius: 100px;
     background-color: #fff;
+  }
+
+  &__next,
+  &__previous {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  &__next-text,
+  &__previous-text {
+    font-family: "Spartan Bold", sans-serif;
+    font-size: 1.8rem;
+    line-height: 2.4rem;
+    text-transform: uppercase;
+    color: var(--text-primary);
   }
 }
 
@@ -163,9 +257,11 @@
   .status {
     margin: 0 2rem 0 4rem;
     display: flex;
+    justify-content: center;
     align-items: center;
     gap: 0.8rem;
-    padding: 1.3rem 3rem;
+    width: 10.4rem;
+    height: 4rem;
     font-size: 1.2rem;
     line-height: 1.5rem;
     letter-spacing: -0.25px;

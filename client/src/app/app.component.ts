@@ -5,7 +5,7 @@ import { UserService } from './_services/user.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
   title = 'client';
@@ -14,9 +14,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.userService.getUser().subscribe({
-      next: user => {
-        this.userService.userSubject.next(user)
-      }
-    })
+      next: (user) => {
+        this.userService.userSubject.next(user);
+      },
+    });
   }
 }

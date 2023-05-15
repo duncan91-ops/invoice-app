@@ -15,7 +15,7 @@ from .pagination import InvoicePagination
 from .serializers import InvoiceSerializer, InvoiceCreateSerializer, InvoiceUpdateSerializer
 
 
-class InvoiceFilter(django_filters.filterset):
+class InvoiceFilter(django_filters.FilterSet):
     status = django_filters.CharFilter(field_name="status", lookup_expr='iexact')
     client_email = django_filters.CharFilter(field_name="client_email", lookup_expr="iexact")
 

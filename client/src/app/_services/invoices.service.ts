@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { tap } from 'rxjs';
+import { tap, map } from 'rxjs/operators';
 
 import { IInvoice } from '@app/_models';
 
@@ -15,17 +15,38 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class InvoicesService {
-  invoices$ = this.getInvoices();
-
   constructor(private http: HttpClient) {}
 
-  getInvoices(): Observable<IInvoice[]> {
-    const URL = '/api/v1/invoices/';
-    return this.http.get<IInvoice[]>(URL, httpOptions).pipe(
-      tap((invoices) => {
-        console.log(invoices);
-      })
-    );
+  getInvoices({
+    page = 1,
+    status,
+    client_email,
+  }: {
+    page?: number;
+    status?: string;
+    client_email?: string;
+  }): Observable<{
+    count: number;
+    results: IInvoice[];
+    next: string | null;
+    previous: string | null;
+  }> {
+    let URL = `/api/v1/invoices/?page=${page}`;
+
+    if (status) {
+      URL = `${URL}&status=${status}`;
+    }
+
+    if (client_email) {
+      URL = `${URL}&client_email=${client_email}`;
+    }
+
+    return this.http.get<{
+      count: number;
+      results: IInvoice[];
+      next: string | null;
+      previous: string | null;
+    }>(URL, httpOptions);
   }
 
   retrieveInvoice(id: string): Observable<IInvoice> {

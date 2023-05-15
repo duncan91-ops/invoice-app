@@ -1,4 +1,4 @@
-<section class="invoices">
+<section class="invoices" (click)="showFilterOptions = false">
   <div class="overlay" (click)="showAddForm = false" *ngIf="showAddForm">
     <app-invoice-add></app-invoice-add>
   </div>
@@ -6,13 +6,29 @@
     <header class="header">
       <div class="header--left">
         <h1 class="title">Invoices</h1>
-        <p class="count">There are 7 total invoices</p>
+        <ng-container *ngIf="invoices$ | async as invoices">
+          <p class="count">
+            There are {{ invoices.count }}
+            {{ selectedStatusOption === "" ? "total" : selectedStatusOption }}
+            invoices
+          </p>
+        </ng-container>
       </div>
       <div class="header--right">
-        <div class="filter">
-          <button class="btn btn__filter">
+        <div class="filter" (click)="$event.stopPropagation()">
+          <button
+            class="btn btn__filter"
+            type="button"
+            (click)="showFilterOptions = !showFilterOptions"
+          >
             <span class="btn__filter-text">Filter by status</span>
-            <svg width="11" height="7" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              class="btn__filter-icon"
+              [ngClass]="{ show: showFilterOptions }"
+              width="11"
+              height="7"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path
                 d="M1 1l4.228 4.228L9.456 1"
                 stroke="#7C5DFA"
@@ -22,6 +38,36 @@
               />
             </svg>
           </button>
+          <ul class="filter__options" *ngIf="showFilterOptions">
+            <li class="filter__option" *ngFor="let option of statusOptions">
+              <button
+                class="btn filter__option-btn"
+                type="button"
+                (click)="filterBy(option)"
+              >
+                <div
+                  class="filter__option-box"
+                  [ngClass]="{ selected: selectedStatusOption === option }"
+                >
+                  <svg
+                    class="check"
+                    width="10"
+                    height="8"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M1.5 4.5l2.124 2.124L8.97 1.28"
+                      stroke="#FFF"
+                      stroke-width="2"
+                      fill="none"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
+                </div>
+                <p class="filter__option-text">{{ option }}</p>
+              </button>
+            </li>
+          </ul>
         </div>
         <button class="btn btn__add" (click)="showAddForm = true" type="button">
           <span class="btn__add-icon">
@@ -38,8 +84,8 @@
       </div>
     </header>
     <ng-container *ngIf="invoices$ | async as invoices">
-      <ul class="items" *ngIf="invoices.length > 0">
-        <li class="item" *ngFor="let invoice of invoices">
+      <ul class="items" *ngIf="invoices.results.length > 0">
+        <li class="item" *ngFor="let invoice of invoices.results">
           <a [routerLink]="['/invoices', invoice.id]" class="item__link">
             <p class="number">
               <span class="hash">#</span>{{ invoice.invoice_no }}
@@ -70,7 +116,7 @@
           </a>
         </li>
       </ul>
-      <div class="empty" *ngIf="invoices.length == 0">
+      <div class="empty" *ngIf="invoices.results.length == 0">
         <div class="illustration-box">
           <img
             src="../../../assets/icons/illustration-empty.svg"
@@ -85,5 +131,51 @@
         </p>
       </div>
     </ng-container>
+  </div>
+  <div class="invoices__nav" *ngIf="invoices$ | async as invoices">
+    <button
+      class="btn btn__previous"
+      type="button"
+      [disabled]="invoices.previous ? false : true"
+      (click)="prevPage()"
+    >
+      <svg
+        class="previous__icon"
+        width="7"
+        height="10"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M6.342.886L2.114 5.114l4.228 4.228"
+          stroke="#9277FF"
+          stroke-width="2"
+          fill="none"
+          fill-rule="evenodd"
+        />
+      </svg>
+      <p class="btn__previous-text">previous</p>
+    </button>
+    <button
+      class="btn btn__next"
+      type="button"
+      [disabled]="invoices.next ? false : true"
+      (click)="nextPage()"
+    >
+      <p class="btn__next-text">next</p>
+      <svg
+        class="next__icon"
+        width="7"
+        height="10"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M1 1l4 4-4 4"
+          stroke="#7C5DFA"
+          stroke-width="2"
+          fill="none"
+          fill-rule="evenodd"
+        />
+      </svg>
+    </button>
   </div>
 </section>
