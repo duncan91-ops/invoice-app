@@ -9,6 +9,7 @@
     margin: 0 auto;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
   }
 }
 
@@ -93,6 +94,7 @@
 }
 
 .header {
+  width: 100%;
   background-color: var(--bg-tertiary);
   padding: 2rem 3.2rem;
   box-shadow: 0px 10px 10px -10px rgba(72, 84, 159, 0.100397);
@@ -133,8 +135,10 @@
   &__box {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.8rem;
-    padding: 1.3rem 1.8rem;
+    height: 4rem;
+    width: 10.4rem;
     font-size: 1.2rem;
     line-height: 1.5rem;
     font-family: "Spartan Bold", sans-serif;
@@ -177,6 +181,7 @@
 }
 
 .details {
+  width: 100%;
   background-color: var(--bg-tertiary);
   padding: 4.8rem;
   box-shadow: 0px 10px 10px -10px rgba(72, 84, 159, 0.100397);
@@ -322,8 +327,13 @@
       }
 
       &__quantity,
-      &__price {
+      &__price,
+      &__multiplication {
         color: var(--text-secondary);
+      }
+
+      &__multiplication {
+        display: none;
       }
     }
   }
@@ -348,6 +358,120 @@
       line-height: 3.2rem;
       color: #fff;
       font-family: "Spartan Bold", sans-serif;
+    }
+  }
+}
+
+@media screen and (max-width: 1279px) {
+  .invoice {
+    padding: 12.8rem 0 4.8rem;
+  }
+
+  .overlay {
+    padding-top: 8rem;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .invoice {
+    padding: 10.4rem 0 14.7rem;
+  }
+
+  .overlay {
+    padding-top: 7.2rem;
+  }
+
+  .header {
+    margin-bottom: 1.6rem;
+    padding: 2.4rem;
+
+    &__btns {
+      background-color: var(--bg-tertiary);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 2.1rem 2.4rem 2.2rem;
+    }
+  }
+
+  .status {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .btn {
+    &__paid {
+      padding: 1.7rem 2.8rem;
+    }
+  }
+
+  .details {
+    padding: 2.4rem;
+
+    .main {
+      margin-bottom: 4rem;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(4, min-content);
+      row-gap: 3.1rem;
+
+      .title,
+      .sender,
+      .sent {
+        grid-column: 1 / span 2;
+      }
+
+      .title {
+        gap: 0.4rem;
+      }
+
+      .number {
+        font-size: 1.2rem;
+        line-height: 1.5rem;
+      }
+
+      .sender {
+        justify-self: start;
+      }
+    }
+
+    .items {
+      padding: 2.4rem;
+
+      &__labels {
+        display: none;
+      }
+
+      .item {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        grid-auto-flow: column;
+        justify-items: start;
+        row-gap: 0.8rem;
+
+        &__quantity,
+        &__price {
+          display: none;
+        }
+
+        &__multiplication {
+          display: block;
+        }
+
+        &__total {
+          justify-self: end;
+          grid-row: 1 / span 2;
+          align-self: center;
+        }
+      }
+    }
+
+    .total {
+      padding: 2.4rem;
+
+      &__value {
+        font-size: 2rem;
+      }
     }
   }
 }

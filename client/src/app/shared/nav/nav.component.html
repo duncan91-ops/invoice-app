@@ -7,7 +7,7 @@
   <section class="section__links">
     <div class="nav--main">
       <ul class="nav__list">
-        <li class="nav__item">
+        <li class="nav__item home">
           <a routerLink="/home" class="nav__link">
             <img
               src="/assets/icons/icon-home.svg"
@@ -17,7 +17,7 @@
             <span class="tooltip">home</span>
           </a>
         </li>
-        <li class="nav__item" *ngIf="user$ | async">
+        <li class="nav__item invoices" *ngIf="user$ | async">
           <a routerLink="/invoices" class="nav__link">
             <img
               src="/assets/icons/icon-invoices.svg"
@@ -27,7 +27,7 @@
             <span class="tooltip">invoices</span>
           </a>
         </li>
-        <li class="nav__item" *ngIf="user$ | async">
+        <li class="nav__item clients" *ngIf="user$ | async">
           <a routerLink="" class="nav__link">
             <img
               src="/assets/icons/icon-clients.svg"

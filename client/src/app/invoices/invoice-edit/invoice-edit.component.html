@@ -38,7 +38,7 @@
             formControlName="post_code"
           />
         </div>
-        <div class="input-container">
+        <div class="input-container country">
           <label for="sender__country" class="label">country</label>
           <input
             type="text"
@@ -50,7 +50,7 @@
       </div>
     </div>
     <div class="fieldset client">
-      <h3 class="legend client__title">bill from</h3>
+      <h3 class="legend client__title">bill to</h3>
       <div class="input-container">
         <label for="client__name" class="label">client's name</label>
         <input
@@ -98,7 +98,7 @@
               formControlName="post_code"
             />
           </div>
-          <div class="input-container">
+          <div class="input-container country">
             <label for="client__country" class="label">country</label>
             <input
               type="text"
@@ -175,25 +175,54 @@
         *ngFor="let item of items.controls; let i = index"
       >
         <div class="items__item" [formGroupName]="i">
-          <input type="text" formControlName="name" class="input name" />
-          <input
-            type="number"
-            #quantity
-            formControlName="quantity"
-            class="input quantity"
-          />
-          <input
-            type="number"
-            formControlName="price"
-            #price
-            class="input price"
-          />
-          <input
-            type="text"
-            formControlName="total"
-            class="input total"
-            [value]="calculateItemTotal(quantity.value, price.value, i)"
-          />
+          <div class="input__container item__name">
+            <label for="item__name" class="label">item name</label>
+            <input
+              type="text"
+              id="item__name"
+              formControlName="name"
+              class="input name"
+              [ngClass]="{
+                error: item.get('name')?.errors ? true : false
+              }"
+            />
+          </div>
+          <div class="input__container item__quantity">
+            <label for="item__quantity" class="label">qty.</label>
+            <input
+              id="item__quantity"
+              type="number"
+              #quantity
+              formControlName="quantity"
+              [ngClass]="{
+                error: item.get('quantity')?.errors ? true : false
+              }"
+              class="input quantity"
+            />
+          </div>
+          <div class="input__container item__price">
+            <label for="item__price" class="label">price</label>
+            <input
+              id="item__price"
+              type="number"
+              formControlName="price"
+              #price
+              [ngClass]="{
+                error: item.get('price')?.errors ? true : false
+              }"
+              class="input price"
+            />
+          </div>
+          <div class="input__container item__total">
+            <label for="item__total" class="label">total</label>
+            <input
+              id="item__total"
+              type="text"
+              formControlName="total"
+              class="input total"
+              [value]="calculateItemTotal(quantity.value, price.value, i)"
+            />
+          </div>
           <button
             class="btn btn__remove-item"
             type="button"

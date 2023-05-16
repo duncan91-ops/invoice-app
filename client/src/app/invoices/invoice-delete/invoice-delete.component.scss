@@ -50,12 +50,12 @@
     text-transform: capitalize;
 
     &.remove {
-      background-color: var(--cta-primary);
+      background-color: var(--cta-secondary);
       color: #fff;
       transition: 0.3s background-color ease-in;
 
       &:hover {
-        background-color: var(--cta-primary-light);
+        background-color: var(--cta-secondary-light);
       }
     }
 
@@ -68,6 +68,16 @@
         background-color: var(--btn-hover-bg-primary);
         color: #7e88c3;
       }
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .delete {
+    padding: 3.2rem;
+
+    &__title {
+      font-size: 2rem;
     }
   }
 }

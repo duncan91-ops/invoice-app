@@ -24,6 +24,7 @@
 .message {
   font-family: "Spartan Medium", sans-serif;
   font-size: 2.5rem;
+  line-height: 3.2rem;
   color: var(--text-primary);
   margin-bottom: 7.5rem;
 }
@@ -48,6 +49,54 @@
 
     &:active {
       transform: translateY(-5px);
+    }
+  }
+}
+
+@media screen and (max-width: 1279px) {
+  .home {
+    position: relative;
+    transform: translate(0, 0);
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 26.5rem 5rem 18.5rem;
+  }
+
+  .title {
+    font-size: 5rem;
+  }
+
+  .message {
+    font-size: 2rem;
+  }
+
+  .btn {
+    &__join,
+    &__invoices {
+      padding: 1.5rem 3rem;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .home {
+    padding: 12rem 2rem 5rem;
+  }
+
+  .title {
+    font-size: 3.5rem;
+  }
+
+  .message {
+    font-size: 1.6rem;
+    margin-bottom: 5rem;
+  }
+
+  .btn {
+    &__join,
+    &__invoices {
+      font-size: 1.6rem;
     }
   }
 }

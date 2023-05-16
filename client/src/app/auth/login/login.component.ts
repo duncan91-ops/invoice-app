@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { AuthService } from '@app/_services/auth.service';
 import { TokenStorageService } from '@app/_services/token-storage.service';
+import { UserService } from '@app/_services/user.service';
 import { ILogin } from '@app/_models';
 
 @Component({
@@ -21,7 +22,8 @@ export class LoginComponent {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private tokenService: TokenStorageService
+    private tokenService: TokenStorageService,
+    private userService: UserService
   ) {}
 
   login() {
@@ -29,7 +31,12 @@ export class LoginComponent {
     this.authService.login(loginData).subscribe({
       next: (token) => {
         this.tokenService.saveToken(token);
-        this.router.navigate(['/invoices']);
+        this.userService.getUser().subscribe({
+          next: (user) => {
+            this.userService.userSubject.next(user);
+            this.router.navigate(['/invoices']);
+          },
+        });
       },
     });
   }

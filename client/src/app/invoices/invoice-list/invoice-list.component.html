@@ -7,11 +7,12 @@
       <div class="header--left">
         <h1 class="title">Invoices</h1>
         <ng-container *ngIf="invoices$ | async as invoices">
-          <p class="count">
+          <p class="count desktop">
             There are {{ invoices.count }}
             {{ selectedStatusOption === "" ? "total" : selectedStatusOption }}
             invoices
           </p>
+          <p class="count mobile">{{ invoices.count }} invoices</p>
         </ng-container>
       </div>
       <div class="header--right">
@@ -21,7 +22,10 @@
             type="button"
             (click)="showFilterOptions = !showFilterOptions"
           >
-            <span class="btn__filter-text">Filter by status</span>
+            <span class="btn__filter-text">
+              <span class="desktop"> Filter by status </span>
+              <div class="mobile">Filter</div>
+            </span>
             <svg
               class="btn__filter-icon"
               [ngClass]="{ show: showFilterOptions }"
@@ -79,7 +83,10 @@
               />
             </svg>
           </span>
-          <span class="btn__add-text">New Invoice</span>
+          <span class="btn__add-text">
+            <span class="desktop"> New Invoice </span>
+            <div class="mobile">New</div>
+          </span>
         </button>
       </div>
     </header>
@@ -104,7 +111,12 @@
               <span class="status__dot"></span>
               <span class="status__text">{{ invoice.status }}</span>
             </div>
-            <svg width="7" height="10" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              class="item__link--icon"
+              width="7"
+              height="10"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path
                 d="M1 1l4 4-4 4"
                 stroke="#7C5DFA"
