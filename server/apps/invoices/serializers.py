@@ -1,8 +1,6 @@
 import logging
 from datetime import datetime, timedelta
 
-from django.utils import timezone
-
 from django_countries.serializer_fields import CountryField
 from rest_framework import serializers
 
@@ -53,21 +51,19 @@ class InvoiceCreateSerializer(serializers.ModelSerializer):
             "items",
             "total",
         ]
-    
+
     def create(self, validated_data):
         user = self.context["request"].user
         client_address_data = validated_data.pop("client_address")
         sender_address_data = validated_data.pop("sender_address")
         items_data = validated_data.pop("items")
-        invoice = Invoice.objects.create(
-            user=user, **validated_data
-        )
+        invoice = Invoice.objects.create(user=user, **validated_data)
         ClientAddress.objects.create(invoice=invoice, **client_address_data)
         SenderAddress.objects.create(invoice=invoice, **sender_address_data)
         for item_data in items_data:
             Item.objects.create(invoice=invoice, **item_data)
         return invoice
-    
+
 
 class InvoiceSerializer(serializers.ModelSerializer):
     sender_address = SenderAddressSerializer()

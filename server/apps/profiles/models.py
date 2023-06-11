@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -47,17 +48,17 @@ class ProfilePhoto(models.Model):
     small = models.URLField(
         verbose_name=_("Small sized Profile Photo"),
         max_length=500,
-        default="https://storage.googleapis.com/invoices-profiles-5cadc-077ea3/small/profile_default.png",
+        default=f"https://storage.googleapis.com/{settings.STORAGE_BUCKET}/small/profile_default.png",
     )
     medium = models.URLField(
         verbose_name=_("medium sized Profile Photo"),
         max_length=500,
-        default="https://storage.googleapis.com/invoices-profiles-5cadc-077ea3/medium/profile_default.png",
+        default=f"https://storage.googleapis.com/{settings.STORAGE_BUCKET}/medium/profile_default.png",
     )
     large = models.URLField(
         verbose_name=_("large sized Profile Photo"),
         max_length=500,
-        default="https://storage.googleapis.com/invoices-profiles-5cadc-077ea3/large/profile_default.png",
+        default=f"https://storage.googleapis.com/{settings.STORAGE_BUCKET}/large/profile_default.png",
     )
 
     def __str__(self):

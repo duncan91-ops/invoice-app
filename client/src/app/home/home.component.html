@@ -1,6 +1,6 @@
 <section class="home">
   <h1 class="title">invoice app</h1>
-  <p class="message">
+  <p class="info">
     Invoice App allows you to send invoices to your clients promptly and without
     delay while keeping a record of all your invoices and their status. We are
     also able to keep a record of your clients. Go paperless with us today!
@@ -12,3 +12,5 @@
     >invoices</a
   >
 </section>
+<p class="message success" *ngIf="successMessage">{{ successMessage }}</p>
+<p class="message failure" *ngIf="failureMessage">{{ failureMessage }}</p>

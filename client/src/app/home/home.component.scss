@@ -21,7 +21,7 @@
   margin-bottom: 3rem;
 }
 
-.message {
+.info {
   font-family: "Spartan Medium", sans-serif;
   font-size: 2.5rem;
   line-height: 3.2rem;
@@ -53,6 +53,28 @@
   }
 }
 
+.message {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 8px;
+  min-width: 30rem;
+  max-width: 50rem;
+  width: 50%;
+  padding: 1rem 1.5rem;
+  color: var(--text-primary);
+  font-size: 1.8rem;
+}
+
+.success {
+  background-color: var(--cta-primary-light);
+}
+
+.failure {
+  background-color: var(--cta-secondary-light);
+}
+
 @media screen and (max-width: 1279px) {
   .home {
     position: relative;
@@ -67,7 +89,7 @@
     font-size: 5rem;
   }
 
-  .message {
+  .info {
     font-size: 2rem;
   }
 
@@ -76,6 +98,10 @@
     &__invoices {
       padding: 1.5rem 3rem;
     }
+  }
+
+  .message {
+    top: 80%;
   }
 }
 
@@ -88,7 +114,7 @@
     font-size: 3.5rem;
   }
 
-  .message {
+  .info {
     font-size: 1.6rem;
     margin-bottom: 5rem;
   }
@@ -98,5 +124,9 @@
     &__invoices {
       font-size: 1.6rem;
     }
+  }
+
+  .message {
+    font-size: 1.6rem;
   }
 }

@@ -144,50 +144,52 @@
       </div>
     </ng-container>
   </div>
-  <div class="invoices__nav" *ngIf="invoices$ | async as invoices">
-    <button
-      class="btn btn__previous"
-      type="button"
-      [disabled]="invoices.previous ? false : true"
-      (click)="prevPage()"
-    >
-      <svg
-        class="previous__icon"
-        width="7"
-        height="10"
-        xmlns="http://www.w3.org/2000/svg"
+  <ng-container *ngIf="invoices$ | async as invoices">
+    <div class="invoices__nav" *ngIf="invoices.results.length">
+      <button
+        class="btn btn__previous"
+        type="button"
+        [disabled]="invoices.previous ? false : true"
+        (click)="prevPage()"
       >
-        <path
-          d="M6.342.886L2.114 5.114l4.228 4.228"
-          stroke="#9277FF"
-          stroke-width="2"
-          fill="none"
-          fill-rule="evenodd"
-        />
-      </svg>
-      <p class="btn__previous-text">previous</p>
-    </button>
-    <button
-      class="btn btn__next"
-      type="button"
-      [disabled]="invoices.next ? false : true"
-      (click)="nextPage()"
-    >
-      <p class="btn__next-text">next</p>
-      <svg
-        class="next__icon"
-        width="7"
-        height="10"
-        xmlns="http://www.w3.org/2000/svg"
+        <svg
+          class="previous__icon"
+          width="7"
+          height="10"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M6.342.886L2.114 5.114l4.228 4.228"
+            stroke="#9277FF"
+            stroke-width="2"
+            fill="none"
+            fill-rule="evenodd"
+          />
+        </svg>
+        <p class="btn__previous-text">previous</p>
+      </button>
+      <button
+        class="btn btn__next"
+        type="button"
+        [disabled]="invoices.next ? false : true"
+        (click)="nextPage()"
       >
-        <path
-          d="M1 1l4 4-4 4"
-          stroke="#7C5DFA"
-          stroke-width="2"
-          fill="none"
-          fill-rule="evenodd"
-        />
-      </svg>
-    </button>
-  </div>
+        <p class="btn__next-text">next</p>
+        <svg
+          class="next__icon"
+          width="7"
+          height="10"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M1 1l4 4-4 4"
+            stroke="#7C5DFA"
+            stroke-width="2"
+            fill="none"
+            fill-rule="evenodd"
+          />
+        </svg>
+      </button>
+    </div>
+  </ng-container>
 </section>
